@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S19: Reading with Machines</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            background-color: #000;
+            color: #00ff00;
+            line-height: 1.5;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .terminal {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid #00ff00;
+            padding: 20px;
+            background-color: #000;
+        }
+
+        .header {
+            border-bottom: 1px solid #00ff00;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .session-id {
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #00cc00;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 2px solid #00ff00;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: #00cc00;
+            margin-bottom: 5px;
+        }
+
+        .section-content {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .readings {
+            margin-top: 30px;
+            border-top: 1px solid #00ff00;
+            padding-top: 20px;
+        }
+
+        .readings-header {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .category {
+            margin-bottom: 20px;
+        }
+
+        .category-label {
+            font-size: 11px;
+            color: #00cc00;
+            margin-bottom: 8px;
+        }
+
+        .reading {
+            margin-bottom: 8px;
+            padding: 8px;
+            background-color: #001100;
+            border-left: 3px solid #00ff00;
+        }
+
+        .reading:hover {
+            background-color: #002200;
+        }
+
+        .reading-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .reading-code {
+            font-size: 11px;
+            color: #00cc00;
+        }
+
+        .reading-title {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .link {
+            font-size: 11px;
+            color: #00ff00;
+            text-decoration: none;
+            padding: 2px 6px;
+            border: 1px solid #00ff00;
+            display: inline-block;
+        }
+
+        .link:hover {
+            background-color: #00ff00;
+            color: #000;
+        }
+
+        .footer {
+            margin-top: 30px;
+            border-top: 1px solid #00ff00;
+            padding-top: 15px;
+            font-size: 11px;
+            color: #00cc00;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .terminal {
+                padding: 15px;
+            }
+
+            .title {
+                font-size: 16px;
+            }
+
+            .section-content {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="header">
+            <div class="session-id">[W10/S19]</div>
+            <div class="title">READING WITH MACHINES: COGNITION IN THE DIGITAL AGE</div>
+            <div class="date">TUE 10/21</div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">[CORE]</div>
+            <div class="section-content">
+                We're already hybrid readers (close/hyper/machine).
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">[KEY QUESTION]</div>
+            <div class="section-content">
+                How does technogenesis (Hayles) reshape cognition/labor as AI scales? What do we gain/lose?
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-label">[PROMPT]</div>
+            <div class="section-content">
+                Use Hayles + one artifact (Grey/Cheng) to map a concrete cognitive or labor shift you've observed.
+            </div>
+        </div>
+
+        <div class="readings">
+            <div class="readings-header">[READINGS]</div>
+            
+            <div class="category">
+                <div class="category-label">[A] CORE</div>
+                
+                <div class="reading">
+                    <div class="reading-header">
+                        <span class="reading-code">S19.A.1</span>
+                    </div>
+                    <div class="reading-title">Hayles, How We Think (Ch.1 "Digital Media & Contemporary Technogenesis")</div>
+                    <div class="links">
+                        <a href="index-close.html" class="link">[READ]</a>
+                        <a href="technogenesis-multi.html" class="link">[TECHNOGENESIS]</a>
+                        <a href="https://hartswf0.github.io/LEGOS/technogenesis-multi.html" class="link" target="_blank">[LEGOS]</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-label">[B] ARTIFACTS</div>
+                
+                <div class="reading">
+                    <div class="reading-header">
+                        <span class="reading-code">S19.B.1</span>
+                    </div>
+                    <div class="reading-title">Grey, Humans Need Not Apply</div>
+                    <div class="links">
+                        <a href="https://www.youtube.com/watch?v=7Pq-S557XQU" class="link" target="_blank">[WATCH]</a>
+                    </div>
+                </div>
+
+                <div class="reading">
+                    <div class="reading-header">
+                        <span class="reading-code">S19.B.2</span>
+                    </div>
+                    <div class="reading-title">Cheng, Life After BOB: The Chalice Study / Thousand Lives</div>
+                    <div class="links">
+                        <a href="https://www.pilarcorrias.com/exhibitions/350-ian-cheng-thousand-lives/" class="link" target="_blank">[PILAR CORRIAS]</a>
+                        <a href="https://shuruqtramontini.com/Thousand-Lives" class="link" target="_blank">[THOUSAND LIVES]</a>
+                        <a href="https://shuruqtramontini.com/Life-After-Bob" class="link" target="_blank">[LIFE AFTER BOB]</a>
+                        <a href="https://hartswf0.github.io/1000-small-futures/thousand-multi.html" class="link" target="_blank">[1000 FUTURES]</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <div class="category-label">[C] SUPPLEMENTAL</div>
+                
+                <div class="reading">
+                    <div class="reading-header">
+                        <span class="reading-code">S19.C.1</span>
+                    </div>
+                    <div class="reading-title">Andrew Hallner's The Scientific Dial Primer: Containing Universal Code Elements of Universal Language, New Base for Mathematics, Etc. (1912)</div>
+                    <div class="links">
+                        <a href="ai_studio_code.html" class="link">[INTERACTIVE]</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #00ff00;">
+                <div style="font-size: 12px; font-weight: bold; margin-bottom: 10px;">[ACKNOWLEDGMENT]</div>
+                <div style="font-size: 11px; line-height: 1.6;">
+                    <p style="margin-bottom: 8px;">Inspired by the <strong>Georgia Tech School of Literature, Media, and Communication (LMC)</strong>, which transformed "from a rather undistinguished English department regarded as a service unit" into "a vital cutting-edge multidisciplinary school" pioneering digital media studies.</p>
+                    
+                    <p style="margin-bottom: 8px;">LMC's mission: to provide "the theoretical and practical foundation for careers as digital media researchers in academia and industry"—reimagining not only the humanities but higher education in general through studio work, computational media, and team-based projects.</p>
+                    
+                    <p style="margin-bottom: 8px;">Digital media as common ground: where humanities scholars use their skills in interpretation, critical theory, and close reading to enhance and codirect projects with colleagues in sciences, engineering, and social sciences.</p>
+                    
+                    <p style="margin-bottom: 0;">Special thanks to <strong>Kenneth Knoespel</strong> and <strong>Ian Bogost</strong> for their pioneering work positioning digital media at the frontier of technological innovation and change.</p>
+                </div>
+            </div>
+            [EOF] SYSTEM READY_
+        </div>
+    </div>
+</body>
+</html>

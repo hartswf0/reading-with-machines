@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cognitive Garden - Technogenesis &amp; The Myth-OS</title>
+    <style>
+        /* Perplexity Design System */
+        :root {
+          /* Primitive Color Tokens */
+          --color-white: rgba(255, 255, 255, 1);
+          --color-black: rgba(0, 0, 0, 1);
+          --color-cream-50: rgba(252, 252, 249, 1);
+          --color-cream-100: rgba(255, 255, 253, 1);
+          --color-gray-200: rgba(245, 245, 245, 1);
+          --color-gray-300: rgba(167, 169, 169, 1);
+          --color-gray-400: rgba(119, 124, 124, 1);
+          --color-slate-500: rgba(98, 108, 113, 1);
+          --color-brown-600: rgba(94, 82, 64, 1);
+          --color-charcoal-700: rgba(31, 33, 33, 1);
+          --color-charcoal-800: rgba(38, 40, 40, 1);
+          --color-slate-900: rgba(19, 52, 59, 1);
+          --color-teal-300: rgba(50, 184, 198, 1);
+          --color-teal-400: rgba(45, 166, 178, 1);
+          --color-teal-500: rgba(33, 128, 141, 1);
+          --color-teal-600: rgba(29, 116, 128, 1);
+          --color-teal-700: rgba(26, 104, 115, 1);
+          --color-teal-800: rgba(41, 150, 161, 1);
+          --color-red-400: rgba(255, 84, 89, 1);
+          --color-red-500: rgba(192, 21, 47, 1);
+          --color-orange-400: rgba(230, 129, 97, 1);
+          --color-orange-500: rgba(168, 75, 47, 1);
+
+          /* RGB versions for opacity control */
+          --color-brown-600-rgb: 94, 82, 64;
+          --color-teal-500-rgb: 33, 128, 141;
+          --color-slate-900-rgb: 19, 52, 59;
+          --color-slate-500-rgb: 98, 108, 113;
+          --color-red-500-rgb: 192, 21, 47;
+          --color-red-400-rgb: 255, 84, 89;
+          --color-orange-500-rgb: 168, 75, 47;
+          --color-orange-400-rgb: 230, 129, 97;
+
+          /* Background color tokens (Light Mode) */
+          --color-bg-1: rgba(59, 130, 246, 0.08); /* Light blue */
+          --color-bg-2: rgba(245, 158, 11, 0.08); /* Light yellow */
+          --color-bg-3: rgba(34, 197, 94, 0.08); /* Light green */
+          --color-bg-4: rgba(239, 68, 68, 0.08); /* Light red */
+          --color-bg-5: rgba(147, 51, 234, 0.08); /* Light purple */
+          --color-bg-6: rgba(249, 115, 22, 0.08); /* Light orange */
+          --color-bg-7: rgba(236, 72, 153, 0.08); /* Light pink */
+          --color-bg-8: rgba(6, 182, 212, 0.08); /* Light cyan */
+
+          /* Semantic Color Tokens (Light Mode) */
+          --color-background: var(--color-cream-50);
+          --color-surface: var(--color-cream-100);
+          --color-text: var(--color-slate-900);
+          --color-text-secondary: var(--color-slate-500);
+          --color-primary: var(--color-teal-500);
+          --color-primary-hover: var(--color-teal-600);
+          --color-primary-active: var(--color-teal-700);
+          --color-secondary: rgba(var(--color-brown-600-rgb), 0.12);
+          --color-secondary-hover: rgba(var(--color-brown-600-rgb), 0.2);
+          --color-secondary-active: rgba(var(--color-brown-600-rgb), 0.25);
+          --color-border: rgba(var(--color-brown-600-rgb), 0.2);
+          --color-btn-primary-text: var(--color-cream-50);
+          --color-card-border: rgba(var(--color-brown-600-rgb), 0.12);
+          --color-card-border-inner: rgba(var(--color-brown-600-rgb), 0.12);
+          --color-error: var(--color-red-500);
+          --color-success: var(--color-teal-500);
+          --color-warning: var(--color-orange-500);
+          --color-info: var(--color-slate-500);
+          --color-focus-ring: rgba(var(--color-teal-500-rgb), 0.4);
+
+          /* Typography */
+          --font-family-base: "FKGroteskNeue", "Geist", "Inter", -apple-system,
+            BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          --font-family-mono: "Berkeley Mono", ui-monospace, SFMono-Regular, Menlo,
+            Monaco, Consolas, monospace;
+          --font-size-xs: 11px;
+          --font-size-sm: 12px;
+          --font-size-base: 14px;
+          --font-size-md: 14px;
+          --font-size-lg: 16px;
+          --font-size-xl: 18px;
+          --font-size-2xl: 20px;
+          --font-size-3xl: 24px;
+          --font-size-4xl: 30px;
+          --font-weight-normal: 400;
+          --font-weight-medium: 500;
+          --font-weight-semibold: 550;
+          --font-weight-bold: 600;
+          --line-height-tight: 1.2;
+          --line-height-normal: 1.5;
+          --letter-spacing-tight: -0.01em;
+
+          /* Spacing */
+          --space-0: 0;
+          --space-1: 1px;
+          --space-2: 2px;
+          --space-4: 4px;
+          --space-6: 6px;
+          --space-8: 8px;
+          --space-10: 10px;
+          --space-12: 12px;
+          --space-16: 16px;
+          --space-20: 20px;
+          --space-24: 24px;
+          --space-32: 32px;
+
+          /* Border Radius */
+          --radius-sm: 6px;
+          --radius-base: 8px;
+          --radius-md: 10px;
+          --radius-lg: 12px;
+          --radius-full: 9999px;
+
+          /* Shadows */
+          --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+          --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
+          --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.04),
+            0 2px 4px -1px rgba(0, 0, 0, 0.02);
+          --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04),
+            0 4px 6px -2px rgba(0, 0, 0, 0.02);
+
+          /* Animation */
+          --duration-fast: 150ms;
+          --duration-normal: 250ms;
+          --ease-standard: cubic-bezier(0.16, 1, 0.3, 1);
+
+          /* Custom presentation colors */
+          --earth: #1a1410;
+          --bark: #8b7355;
+          --moss: #4a5f3b;
+          --leaf: #a8c49a;
+          --parchment: #f4ede1;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+@font-face {
+  font-family: 'FKGroteskNeue';
+  src: url('https://r2cdn.perplexity.ai/fonts/FKGroteskNeue.woff2') format('woff2');
+}
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--earth);
+            color: var(--parchment);
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            line-height: var(--line-height-normal);
+        }
+
+        /* Presentation Container */
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Two-Zone Layout */
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 1.5s var(--ease-standard);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .visual-zone {
+            height: 60%;
+            position: relative;
+            background: var(--earth);
+            overflow: hidden;
+        }
+
+        .content-zone {
+            height: 40%;
+            background: linear-gradient(to bottom, rgba(26, 20, 16, 0.95), rgba(26, 20, 16, 1));
+            padding: var(--space-32);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            border-top: 2px solid rgba(139, 115, 85, 0.3);
+        }
+
+        .zone-divider {
+            position: absolute;
+            top: 60%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, 
+                transparent, 
+                rgba(139, 115, 85, 0.5), 
+                transparent);
+            z-index: 10;
+        }
+
+        /* Typography Hierarchy */
+        .slide-title {
+            font-size: clamp(32px, 5vw, 64px);
+            font-weight: var(--font-weight-bold);
+            line-height: var(--line-height-tight);
+            margin-bottom: var(--space-16);
+            letter-spacing: var(--letter-spacing-tight);
+            text-transform: uppercase;
+            color: var(--parchment);
+        }
+
+        .slide-subtitle {
+            font-size: clamp(20px, 3vw, 32px);
+            font-weight: var(--font-weight-normal);
+            margin-bottom: var(--space-24);
+            color: var(--leaf);
+        }
+
+        .slide-text {
+            font-size: clamp(16px, 2vw, 24px);
+            line-height: 1.4;
+            margin-bottom: var(--space-16);
+            color: var(--parchment);
+        }
+
+        .slide-quote {
+            font-size: clamp(18px, 2.5vw, 28px);
+            font-style: italic;
+            color: var(--leaf);
+            margin: var(--space-16) 0;
+            border-left: 3px solid var(--leaf);
+            padding-left: var(--space-16);
+        }
+
+        .slide-citation {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            margin-top: var(--space-8);
+            font-style: normal;
+        }
+
+        .slide-labels {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-16);
+            margin-top: var(--space-16);
+        }
+
+        .label {
+            padding: var(--space-8) var(--space-16);
+            border: 2px solid var(--bark);
+            border-radius: var(--radius-base);
+            font-size: clamp(12px, 1.5vw, 18px);
+            font-weight: var(--font-weight-semibold);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: rgba(139, 115, 85, 0.1);
+        }
+
+        .transformation {
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+            margin: var(--space-8) 0;
+            font-size: clamp(14px, 1.8vw, 20px);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .transformation::after {
+            content: '→';
+            color: var(--leaf);
+            font-size: 1.2em;
+        }
+
+        /* Canvas for Animations */
+        .animation-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Reference Images */
+        .reference-image {
+            position: absolute;
+            opacity: 0.15;
+            z-index: 0;
+            border-radius: var(--radius-base);
+            filter: sepia(20%) hue-rotate(20deg);
+        }
+
+        .reference-top-left {
+            top: var(--space-20);
+            left: var(--space-20);
+            width: 120px;
+            height: auto;
+        }
+
+        .reference-bottom-right {
+            bottom: var(--space-20);
+            right: var(--space-20);
+            width: 100px;
+            height: auto;
+        }
+
+        /* Progress Indicator */
+        .progress {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            font-size: 18px;
+            font-weight: 700;
+            z-index: 1000;
+            color: var(--bark);
+        }
+
+        /* Navigation Instructions */
+        .nav-hint {
+            position: fixed;
+            bottom: var(--space-20);
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: var(--font-size-sm);
+            color: var(--bark);
+            z-index: 1000;
+            opacity: 0.8;
+            text-align: center;
+            background: rgba(26, 20, 16, 0.9);
+            padding: var(--space-8) var(--space-16);
+            border-radius: var(--radius-base);
+            border: 1px solid rgba(139, 115, 85, 0.3);
+        }
+
+        /* Speaker Notes Sidebar */
+        .notes-sidebar {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 400px;
+            height: 100vh;
+            background: rgba(26, 20, 16, 0.98);
+            border-left: 2px solid var(--bark);
+            padding: var(--space-24);
+            z-index: 2000;
+            transition: right 0.3s var(--ease-standard);
+            overflow-y: auto;
+        }
+
+        .notes-sidebar.active {
+            right: 0;
+        }
+
+        .notes-header {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: var(--space-16);
+            color: var(--leaf);
+            border-bottom: 1px solid var(--bark);
+            padding-bottom: var(--space-8);
+        }
+
+        .notes-content {
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--parchment);
+            margin-bottom: var(--space-16);
+        }
+
+        .notes-citation {
+            font-size: var(--font-size-sm);
+            color: var(--color-text-secondary);
+            font-style: italic;
+            border-left: 3px solid var(--moss);
+            padding-left: var(--space-12);
+            margin-top: var(--space-16);
+        }
+
+        .notes-toggle {
+            position: fixed;
+            top: var(--space-20);
+            right: var(--space-20);
+            background: rgba(26, 20, 16, 0.9);
+            border: 2px solid var(--bark);
+            color: var(--parchment);
+            padding: var(--space-8) var(--space-16);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            border-radius: var(--radius-base);
+            cursor: pointer;
+            z-index: 2100;
+            transition: all 0.2s var(--ease-standard);
+        }
+
+        .notes-toggle:hover {
+            background: var(--bark);
+            color: var(--earth);
+        }
+
+        .notes-toggle.active {
+            background: var(--leaf);
+            color: var(--earth);
+            border-color: var(--leaf);
+        }
+
+        /* Credits */
+        .credits {
+            margin-top: var(--space-24);
+            padding-top: var(--space-16);
+            border-top: 1px solid rgba(139, 115, 85, 0.3);
+        }
+
+        .credits .slide-citation {
+            margin-bottom: var(--space-8);
+        }
+
+        /* Improved Animations */
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .breathe {
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .notes-sidebar {
+                width: 300px;
+                right: -300px;
+            }
+            
+            .content-zone {
+                height: 45%;
+                padding: var(--space-24);
+            }
+            
+            .visual-zone {
+                height: 55%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-zone {
+                height: 50%;
+                padding: var(--space-16);
+            }
+            
+            .visual-zone {
+                height: 50%;
+            }
+            
+            .slide-title {
+                font-size: clamp(24px, 6vw, 48px);
+            }
+            
+            .slide-text {
+                font-size: clamp(14px, 3vw, 20px);
+            }
+            
+            .notes-sidebar {
+                width: 100vw;
+                right: -100vw;
+                padding: var(--space-16);
+            }
+            
+            .notes-sidebar.active {
+                right: 0;
+            }
+            
+            .reference-image {
+                width: 80px !important;
+            }
+        }
+
+        /* Dark Mode Adjustments */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --earth: #0f0f0f;
+                --bark: #a0946f;
+                --moss: #5a6f4b;
+                --leaf: #b8d4aa;
+                --parchment: #f8f8f8;
+            }
+            
+            .reference-image {
+                filter: sepia(20%) hue-rotate(20deg) brightness(0.8) contrast(1.2);
+            }
+        }
+
+        /* Performance Optimizations */
+        .animation-canvas {
+            will-change: contents;
+        }
+        
+        .slide {
+            will-change: opacity;
+        }
+        
+        /* Focus States for Accessibility */
+        .notes-toggle:focus {
+            outline: 2px solid var(--leaf);
+            outline-offset: 2px;
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Presentation Mode */
+        .presentation-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 2000;
+            background: var(--earth);
+            display: none;
+        }
+
+        .presentation-mode.active {
+            display: block;
+        }
+
+        /* Geometric Shapes */
+        .geometric-shape {
+            position: absolute;
+            border: 3px solid var(--bark);
+        }
+
+        .rectangle {
+            width: 200px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 24px;
+        }
+
+        .prohibition {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid var(--moss);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .prohibition::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 4px;
+            background: var(--moss);
+            transform: rotate(45deg);
+        }
+
+        /* Animation Classes */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .grow {
+            animation: grow 3s ease-out;
+        }
+
+        @keyframes grow {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .fade-in-sequence {
+            animation: fadeInSequence 1s ease-out forwards;
+        }
+
+        @keyframes fadeInSequence {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .orbital {
+            animation: orbital 8s linear infinite;
+        }
+
+        @keyframes orbital {
+            0% { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+        }
+
+        /* Credits */
+        .credits {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+            animation: scrollUp 20s linear infinite;
+        }
+
+        @keyframes scrollUp {
+            0% { transform: translateX(-50%) translateY(100vh); }
+            100% { transform: translateX(-50%) translateY(-100vh); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .slide-text, .slide-quote {
+                max-width: 95%;
+                font-size: clamp(16px, 4vw, 24px);
+            }
+            
+            .slide-labels {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .rectangle {
+                width: 150px;
+                height: 80px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Progress Indicator -->
+        <div class="progress">1 / 10</div>
+        
+        <!-- Navigation Hint -->
+        <div class="nav-hint">← → Space | N:Notes | P:Present | F:Fullscreen</div>
+        
+        <!-- Notes Toggle Button -->
+        <button class="notes-toggle" id="notesToggle">Notes (N)</button>
+        
+        <!-- Speaker Notes Sidebar -->
+        <div class="notes-sidebar" id="notesSidebar">
+            <div class="notes-header" id="notesTitle">Speaker Notes</div>
+            <div class="notes-content" id="notesContent">Welcome to The Cognitive Garden presentation.</div>
+            <div class="notes-citation" id="notesCitation"></div>
+        </div>
+
+        <!-- Slide 0: Title Sequence -->
+        <div class="slide active" data-slide="0">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="titleCanvas"></canvas>
+                <img class="reference-image reference-bottom-right" src="https://pplx-res.cloudinary.com/image/upload/v1760836745/pplx_project_search_images/4df769f79dd84874783991fed240c2cf6c983e97.png" alt="John Whitney orbital patterns" style="width: 150px;">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">THE COGNITIVE GARDEN</div>
+                <div class="slide-subtitle">Technogenesis &amp; The Myth-OS</div>
+                <div class="slide-citation">Inspired by Saul Bass &amp; John Whitney</div>
+            </div>
+        </div>
+
+        <!-- Slide 1: The Problem Stated -->
+        <div class="slide" data-slide="1">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="problemCanvas"></canvas>
+                <img class="reference-image reference-top-left" src="https://pplx-res.cloudinary.com/image/upload/v1760836745/pplx_project_search_images/4fd7f0af064b226abd1c3cefdf06de037d9ad0f3.png" alt="Saul Bass geometric shapes">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">THE PROBLEM STATED</div>
+                <div class="slide-text">Current AI policy treats intelligence as individual property. But cognition has never been solo.</div>
+                <div class="slide-citation">Extended Mind Thesis (Clark &amp; Chalmers, 1998)</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Forest Floor -->
+        <div class="slide" data-slide="2">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="forestCanvas"></canvas>
+                <img class="reference-image reference-bottom-right" src="https://pplx-res.cloudinary.com/image/upload/v1754720039/pplx_project_search_images/2dd43a029aeab62904f5b797bbed872ad1a90f53.png" alt="Mycorrhizal network diagram">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">THE FOREST FLOOR</div>
+                <div class="slide-text">Trees share nutrients through fungal networks. 80% of plants connected. This is cognitive ecology.</div>
+                <div class="slide-citation">Mycorrhizal networks enable forest communication</div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Technogenesis -->
+        <div class="slide" data-slide="3">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="techCanvas"></canvas>
+                <img class="reference-image reference-top-left" src="https://pplx-res.cloudinary.com/image/upload/v1754697231/pplx_project_search_images/d9518a336cf58bfbb2d29b3f8df6bb5ff9ff4550.png" alt="DNA helix structure">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">TECHNOGENESIS</div>
+                <div class="slide-text">Tools don't extend us—we co-evolve with them. Brain structure changes with writing, printing, computing.</div>
+                <div class="slide-quote">"We think through, with, and alongside media." <span class="slide-citation">—N. Katherine Hayles</span></div>
+                <div class="slide-citation">Hayles, How We Think (2012)</div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Extended Cognition -->
+        <div class="slide" data-slide="4">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="cognitionCanvas"></canvas>
+                <img class="reference-image reference-bottom-right" src="https://pplx-res.cloudinary.com/image/upload/v1755220408/pplx_project_search_images/dcc2e9a11e8e7eb0e1660c8c825dcb7917395c0d.png" alt="Orbital gyroscope mechanism">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">EXTENDED COGNITION</div>
+                <div class="slide-text">Otto's notebook = his memory. Inga's brain = her memory. Same cognitive function, different substrate.</div>
+                <div class="slide-citation">Andy Clark &amp; David Chalmers, 'The Extended Mind' (1998)</div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Three Reading Modes -->
+        <div class="slide" data-slide="5">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="readingCanvas"></canvas>
+                <img class="reference-image reference-top-left" src="https://pplx-res.cloudinary.com/image/upload/v1760836745/pplx_project_search_images/2db5149fe0700cde3d3778b8e76dab061946c5fe.png" alt="Geometric patterns" style="width: 100px;">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">THREE READING MODES</div>
+                <div class="slide-text">Close: Traditional deep attention. Hyper: Web scanning/filtering. Machine: Pattern recognition at scale.</div>
+                <div class="slide-citation">Hayles distinguishes close, hyper, and machine reading modes</div>
+            </div>
+        </div>
+
+        <!-- Slide 6: The Myth-Operating System -->
+        <div class="slide" data-slide="6">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="mythCanvas"></canvas>
+                <img class="reference-image reference-bottom-right" src="https://pplx-res.cloudinary.com/image/upload/v1755220408/pplx_project_search_images/dcc2e9a11e8e7eb0e1660c8c825dcb7917395c0d.png" alt="Gyroscope rings">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">THE MYTH-OPERATING SYSTEM</div>
+                <div class="slide-text">AI as cultural recombination engine. Prompts invoke myth-space. Outputs = executable narratives.</div>
+                <div class="slide-quote">"The literature machine can perform all the permutations possible on a given material" <span class="slide-citation">—Italo Calvino</span></div>
+                <div class="slide-citation">Calvino, 'Cybernetics and Ghosts' (1967)</div>
+            </div>
+        </div>
+
+        <!-- Slide 7: The Policy Failure -->
+        <div class="slide" data-slide="7">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="policyCanvas"></canvas>
+                <img class="reference-image reference-top-left" src="https://pplx-res.cloudinary.com/image/upload/v1755572831/pplx_project_search_images/e142b5ca09b320d8643bc491cadba3ff832005ca.png" alt="Bureaucratic forms checkboxes">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">THE POLICY FAILURE</div>
+                <div class="slide-text">Binary disclosure demands (YES/NO) applied to continuous cognitive transformation. Category error.</div>
+                <div class="slide-labels">
+                    <div class="label">MISDIAGNOSIS</div>
+                    <div class="label">PERVERSE INCENTIVES</div>
+                    <div class="label">BIOLOGICAL DENIAL</div>
+                </div>
+                <div class="slide-citation">Disclosure policies assume discrete authorship</div>
+            </div>
+        </div>
+
+        <!-- Slide 8: What Dies -->
+        <div class="slide" data-slide="8">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="diesCanvas"></canvas>
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">WHAT DIES</div>
+                <div class="slide-text">When ecosystems select for concealment, transparency dies. Dark forest problem applied to education.</div>
+                <div class="slide-labels">
+                    <div class="label">Institution becomes fossil</div>
+                    <div class="label">Documentation becomes silence</div>
+                    <div class="label">Integrity becomes disadvantage</div>
+                </div>
+                <div class="slide-citation">Adverse selection in disclosure regimes</div>
+            </div>
+        </div>
+
+
+
+        <!-- Slide 9: The Question -->
+        <div class="slide" data-slide="9">
+            <div class="visual-zone">
+                <canvas class="animation-canvas" id="closingCanvas"></canvas>
+                <img class="reference-image reference-top-left" src="https://pplx-res.cloudinary.com/image/upload/v1754720039/pplx_project_search_images/874962d6a2a2ea84500ac2b8f29d66ac35999fb8.png" alt="Mycorrhizal network">
+            </div>
+            <div class="zone-divider"></div>
+            <div class="content-zone">
+                <div class="slide-title">THE QUESTION</div>
+                <div class="slide-text">Can we develop literacy adequate to the myth-OS we've built?</div>
+                <div class="slide-text" style="margin-top: var(--space-24); font-style: italic;">The co-evolution is irreversible. The question is: can we think ecologically about thinking itself?</div>
+                <div class="credits">
+                    <div class="slide-citation">Inspired by Saul Bass &amp; John Whitney</div>
+                    <div class="slide-citation">Based on research by N. Katherine Hayles, Andy Clark, David Chalmers, Italo Calvino</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Speaker Notes Data
+        const speakerNotes = {
+            0: {
+                title: "Title Slide",
+                content: "Welcome to a kinetic exploration of thinking as ecological process. This presentation visualizes how human and artificial cognition form integrated systems.",
+                citation: "Inspired by Saul Bass geometric abstraction and John Whitney's computational patterns"
+            },
+            1: {
+                title: "The Problem Stated", 
+                content: "Current AI policy treats intelligence as individual property. But cognition has never been solo. We're applying 20th century categories to 21st century realities.",
+                citation: "Extended Mind Thesis (Clark & Chalmers, 1998)"
+            },
+            2: {
+                title: "The Forest Floor",
+                content: "Trees share nutrients through fungal networks. 80% of plants connected. This is cognitive ecology. No individual tree 'owns' the nutrients it processes.",
+                citation: "Mycorrhizal networks enable forest communication and resource sharing"
+            },
+            3: {
+                title: "Technogenesis",
+                content: "Tools don't extend us—we co-evolve with them. Brain structure changes with writing, printing, computing. We are always already cyborgs.",
+                citation: "Hayles, How We Think (2012) - explores cognitive-technological co-evolution"
+            },
+            4: {
+                title: "Extended Cognition",
+                content: "Otto's notebook = his memory. Inga's brain = her memory. Same cognitive function, different substrate. The boundaries of mind are negotiable.",
+                citation: "Andy Clark & David Chalmers, 'The Extended Mind' (1998)"
+            },
+            5: {
+                title: "Three Reading Modes",
+                content: "Close: Traditional deep attention. Hyper: Web scanning/filtering. Machine: Pattern recognition at scale. Each mode requires different neural architectures.",
+                citation: "Hayles distinguishes close, hyper, and machine reading as complementary cognitive modes"
+            },
+            6: {
+                title: "The Myth-Operating System",
+                content: "AI as cultural recombination engine. Prompts invoke myth-space. Outputs = executable narratives. We're building a literature machine that dreams.",
+                citation: "Calvino, 'Cybernetics and Ghosts' (1967) - prefigures AI as narrative engine"
+            },
+            7: {
+                title: "The Policy Failure",
+                content: "Binary disclosure demands (YES/NO) applied to continuous cognitive transformation. Category error. Like asking if breathing is 'natural' or 'artificial'.",
+                citation: "Disclosure policies assume discrete authorship in an age of cognitive distribution"
+            },
+            8: {
+                title: "What Dies",
+                content: "When ecosystems select for concealment, transparency dies. Dark forest problem applied to education. Fear creates the very opacity it claims to prevent.",
+                citation: "Adverse selection in disclosure regimes - Goodhart's Law applied to academic integrity"
+            },
+            9: {
+                title: "The Question",
+                content: "The co-evolution is irreversible. The question is: can we think ecologically about thinking itself? Can we garden instead of police?",
+                citation: "Toward an ecological approach to AI literacy and cognitive partnership"
+            }
+        };
+
+        // Animation System
+        class PresentationAnimator {
+            constructor() {
+                this.currentSlide = 0;
+                this.totalSlides = 10;
+                this.animationFrames = {};
+                this.isPresenting = false;
+                this.notesActive = false;
+                this.setupEventListeners();
+                this.initializeCanvases();
+                this.setupNotesSystem();
+                this.updateNotes();
+                this.startSlideAnimation(0);
+            }
+
+            setupEventListeners() {
+                document.addEventListener('keydown', (e) => {
+                    switch(e.key) {
+                        case 'ArrowRight':
+                        case ' ':
+                            e.preventDefault();
+                            this.nextSlide();
+                            break;
+                        case 'ArrowLeft':
+                            e.preventDefault();
+                            this.prevSlide();
+                            break;
+                        case 'n':
+                        case 'N':
+                            e.preventDefault();
+                            this.toggleNotes();
+                            break;
+                        case 'p':
+                        case 'P':
+                            e.preventDefault();
+                            this.togglePresentationMode();
+                            break;
+                        case 'f':
+                        case 'F':
+                            e.preventDefault();
+                            this.toggleFullscreen();
+                            break;
+                        case 'Escape':
+                            if (this.notesActive) {
+                                this.toggleNotes();
+                            }
+                            break;
+                    }
+                });
+            }
+
+            setupNotesSystem() {
+                const notesToggle = document.getElementById('notesToggle');
+                notesToggle.addEventListener('click', () => this.toggleNotes());
+            }
+
+            toggleNotes() {
+                this.notesActive = !this.notesActive;
+                const sidebar = document.getElementById('notesSidebar');
+                const toggle = document.getElementById('notesToggle');
+                
+                sidebar.classList.toggle('active', this.notesActive);
+                toggle.classList.toggle('active', this.notesActive);
+                
+                if (this.notesActive) {
+                    this.updateNotes();
+                }
+            }
+
+            updateNotes() {
+                const noteData = speakerNotes[this.currentSlide];
+                if (noteData) {
+                    document.getElementById('notesTitle').textContent = noteData.title;
+                    document.getElementById('notesContent').textContent = noteData.content;
+                    document.getElementById('notesCitation').textContent = noteData.citation;
+                }
+            }
+
+            toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+
+            initializeCanvases() {
+                for (let i = 0; i <= 10; i++) {
+                    const canvasId = this.getCanvasId(i);
+                    const canvas = document.getElementById(canvasId);
+                    if (canvas) {
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = window.innerWidth;
+                        canvas.height = window.innerHeight;
+                        this.setupCanvasAnimation(i, ctx, canvas);
+                    }
+                }
+            }
+
+            getCanvasId(slideIndex) {
+                const canvasIds = [
+                    'titleCanvas', 'problemCanvas', 'forestCanvas', 'techCanvas',
+                    'cognitionCanvas', 'readingCanvas', 'mythCanvas', 'policyCanvas',
+                    'diesCanvas', 'closingCanvas'
+                ];
+                return canvasIds[slideIndex];
+            }
+
+            setupCanvasAnimation(slideIndex, ctx, canvas) {
+                let animationFrame;
+                let startTime = Date.now();
+
+                const animate = () => {
+                    const currentTime = Date.now();
+                    const elapsed = (currentTime - startTime) / 1000;
+
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    switch(slideIndex) {
+                        case 0:
+                            this.animateTitleSequence(ctx, canvas, elapsed);
+                            break;
+                        case 1:
+                            this.animateProblemStated(ctx, canvas, elapsed);
+                            break;
+                        case 2:
+                            this.animateForestFloor(ctx, canvas, elapsed);
+                            break;
+                        case 3:
+                            this.animateTechnogenesis(ctx, canvas, elapsed);
+                            break;
+                        case 4:
+                            this.animateExtendedCognition(ctx, canvas, elapsed);
+                            break;
+                        case 5:
+                            this.animateReadingModes(ctx, canvas, elapsed);
+                            break;
+                        case 6:
+                            this.animateMythOS(ctx, canvas, elapsed);
+                            break;
+                        case 7:
+                            this.animatePolicyFailure(ctx, canvas, elapsed);
+                            break;
+                        case 8:
+                            this.animateWhatDies(ctx, canvas, elapsed);
+                            break;
+                        case 8:
+                            this.animateWhatDies(ctx, canvas, elapsed);
+                            break;
+                        case 9:
+                            this.animateClosing(ctx, canvas, elapsed);
+                            break;
+                    }
+
+                    animationFrame = requestAnimationFrame(animate);
+                };
+
+                this.animationFrames[slideIndex] = {
+                    start: () => {
+                        startTime = Date.now();
+                        animate();
+                    },
+                    stop: () => {
+                        if (animationFrame) {
+                            cancelAnimationFrame(animationFrame);
+                        }
+                    }
+                };
+            }
+
+            // Individual Animation Methods
+            animateTitleSequence(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+
+                // Root network growing from bottom
+                if (elapsed > 0.5) {
+                    ctx.strokeStyle = colors.bark;
+                    ctx.lineWidth = 4;
+                    const rootProgress = Math.min((elapsed - 0.5) / 2.5, 1);
+                    
+                    for (let i = 0; i < 7; i++) {
+                        const x = (canvas.width / 8) * (i + 1);
+                        const y = canvas.height;
+                        const targetY = canvas.height - 180 * rootProgress;
+                        const sway = Math.sin(elapsed * 1.5 + i) * 15;
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x + sway, targetY);
+                        ctx.stroke();
+                        
+                        // Branch connections
+                        if (rootProgress > 0.5 && i < 6) {
+                            const nextX = (canvas.width / 8) * (i + 2);
+                            const branchY = targetY + 50;
+                            ctx.beginPath();
+                            ctx.moveTo(x + sway, targetY);
+                            ctx.lineTo(nextX + Math.sin(elapsed * 1.5 + i + 1) * 15, branchY);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // Orbital patterns (John Whitney style)
+                if (elapsed > 2) {
+                    ctx.fillStyle = colors.leaf;
+                    const orbitalProgress = Math.min((elapsed - 2) / 3, 1);
+                    
+                    for (let ring = 0; ring < 4; ring++) {
+                        const ringRadius = 80 + ring * 40;
+                        const nodeCount = 6 + ring * 2;
+                        const speed = (ring % 2 === 0 ? 1 : -1) * (1 + ring * 0.3);
+                        
+                        for (let i = 0; i < nodeCount; i++) {
+                            const baseAngle = (i / nodeCount) * Math.PI * 2;
+                            const angle = baseAngle + elapsed * speed * 0.5 * orbitalProgress;
+                            const x = centerX + Math.cos(angle) * ringRadius * orbitalProgress;
+                            const y = centerY + Math.sin(angle) * ringRadius * 0.6 * orbitalProgress;
+                            
+                            const size = 3 + ring;
+                            ctx.beginPath();
+                            ctx.arc(x, y, size, 0, Math.PI * 2);
+                            ctx.fill();
+                            
+                            // Connection lines between rings
+                            if (ring > 0 && elapsed > 4) {
+                                const prevRingRadius = 80 + (ring - 1) * 40;
+                                const prevX = centerX + Math.cos(angle) * prevRingRadius * orbitalProgress;
+                                const prevY = centerY + Math.sin(angle) * prevRingRadius * 0.6 * orbitalProgress;
+                                
+                                ctx.strokeStyle = `rgba(168, 196, 154, 0.3)`;
+                                ctx.lineWidth = 1;
+                                ctx.beginPath();
+                                ctx.moveTo(prevX, prevY);
+                                ctx.lineTo(x, y);
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                }
+
+                // Central pulse
+                if (elapsed > 5) {
+                    const pulseRadius = 15 + Math.sin(elapsed * 3) * 8;
+                    ctx.fillStyle = `rgba(168, 196, 154, ${0.7 + Math.sin(elapsed * 3) * 0.3})`;
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, pulseRadius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            animateProblemStated(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b'
+                };
+
+                // Two rectangles - HUMAN and MACHINE
+                ctx.strokeStyle = colors.bark;
+                ctx.lineWidth = 4;
+                ctx.font = '24px Futura PT, sans-serif';
+                ctx.fillStyle = '#f4ede1';
+
+                // Left rectangle - HUMAN
+                const leftX = canvas.width / 4 - 100;
+                const leftY = canvas.height / 2 - 60;
+                const pulseScale = 1 + Math.sin(elapsed * 3) * 0.1;
+                
+                ctx.save();
+                ctx.translate(leftX + 100, leftY + 60);
+                ctx.scale(pulseScale, pulseScale);
+                ctx.strokeRect(-100, -60, 200, 120);
+                ctx.fillText('HUMAN', -30, 8);
+                ctx.restore();
+
+                // Right rectangle - MACHINE
+                const rightX = (3 * canvas.width) / 4 - 100;
+                const rightY = canvas.height / 2 - 60;
+                
+                ctx.save();
+                ctx.translate(rightX + 100, rightY + 60);
+                ctx.scale(pulseScale, pulseScale);
+                ctx.strokeRect(-100, -60, 200, 120);
+                ctx.fillText('MACHINE', -40, 8);
+                ctx.restore();
+
+                // Prohibition symbol in center
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                
+                ctx.strokeStyle = colors.moss;
+                ctx.lineWidth = 6;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 40, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(centerX - 28, centerY - 28);
+                ctx.lineTo(centerX + 28, centerY + 28);
+                ctx.stroke();
+
+                // Late in animation, rectangles start to overlap slightly
+                if (elapsed > 4) {
+                    ctx.globalAlpha = 0.3;
+                    ctx.fillStyle = colors.leaf;
+                    const overlapProgress = Math.min((elapsed - 4) / 2, 0.5);
+                    const overlapDistance = 50 * overlapProgress;
+                    
+                    ctx.fillRect(leftX + overlapDistance, leftY, 200, 120);
+                    ctx.fillRect(rightX - overlapDistance, rightY, 200, 120);
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            animateForestFloor(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                // Tree nodes (dots)
+                const trees = [
+                    {x: canvas.width * 0.2, y: canvas.height * 0.3},
+                    {x: canvas.width * 0.8, y: canvas.height * 0.4},
+                    {x: canvas.width * 0.5, y: canvas.height * 0.7},
+                    {x: canvas.width * 0.3, y: canvas.height * 0.6},
+                    {x: canvas.width * 0.7, y: canvas.height * 0.2}
+                ];
+
+                // Draw trees
+                ctx.fillStyle = colors.bark;
+                trees.forEach(tree => {
+                    ctx.beginPath();
+                    ctx.arc(tree.x, tree.y, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                // Mycorrhizal network (growing connections)
+                ctx.strokeStyle = colors.moss;
+                ctx.lineWidth = 2;
+                
+                const connectionProgress = Math.min(elapsed / 3, 1);
+                
+                for (let i = 0; i < trees.length; i++) {
+                    for (let j = i + 1; j < trees.length; j++) {
+                        const tree1 = trees[i];
+                        const tree2 = trees[j];
+                        
+                        const distance = Math.sqrt(
+                            Math.pow(tree2.x - tree1.x, 2) + 
+                            Math.pow(tree2.y - tree1.y, 2)
+                        );
+                        
+                        if (distance < 400) { // Only connect nearby trees
+                            const lineProgress = Math.max(0, 
+                                Math.min(1, (connectionProgress * 2) - (i + j) * 0.1)
+                            );
+                            
+                            const endX = tree1.x + (tree2.x - tree1.x) * lineProgress;
+                            const endY = tree1.y + (tree2.y - tree1.y) * lineProgress;
+                            
+                            ctx.beginPath();
+                            ctx.moveTo(tree1.x, tree1.y);
+                            ctx.lineTo(endX, endY);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                // Information flow (pulsing particles)
+                if (elapsed > 2) {
+                    ctx.fillStyle = colors.leaf;
+                    const flowTime = elapsed - 2;
+                    
+                    for (let i = 0; i < trees.length - 1; i++) {
+                        const tree1 = trees[i];
+                        const tree2 = trees[i + 1];
+                        
+                        const t = (flowTime * 0.5 + i * 0.2) % 1;
+                        const x = tree1.x + (tree2.x - tree1.x) * t;
+                        const y = tree1.y + (tree2.y - tree1.y) * t;
+                        
+                        ctx.beginPath();
+                        ctx.arc(x, y, 4, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            animateTechnogenesis(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                
+                // DNA-like spirals
+                ctx.lineWidth = 4;
+                
+                // Human spiral
+                ctx.strokeStyle = colors.bark;
+                ctx.beginPath();
+                for (let i = 0; i < 200; i++) {
+                    const angle = (i / 200) * Math.PI * 8 * Math.min(elapsed / 3, 1);
+                    const radius = 80 + Math.sin(angle * 2) * 20;
+                    const x = centerX - 100 + Math.cos(angle) * radius;
+                    const y = centerY + (i / 200) * 300 - 150;
+                    
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                // Tech spiral
+                ctx.strokeStyle = colors.moss;
+                ctx.beginPath();
+                for (let i = 0; i < 200; i++) {
+                    const angle = (i / 200) * Math.PI * 8 * Math.min(elapsed / 3, 1) + Math.PI;
+                    const radius = 80 + Math.sin(angle * 2) * 20;
+                    const x = centerX + 100 + Math.cos(angle) * radius;
+                    const y = centerY + (i / 200) * 300 - 150;
+                    
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+
+                // Labels
+                if (elapsed > 1) {
+                    ctx.font = '20px Futura PT, sans-serif';
+                    ctx.fillStyle = '#f4ede1';
+                    ctx.fillText('HUMAN', centerX - 150, centerY - 180);
+                    ctx.fillText('TECH', centerX + 80, centerY - 180);
+                }
+
+                // Exchange elements (dots moving between spirals)
+                if (elapsed > 2) {
+                    ctx.fillStyle = colors.leaf;
+                    const exchangeTime = elapsed - 2;
+                    
+                    for (let i = 0; i < 5; i++) {
+                        const t = (exchangeTime * 0.5 + i * 0.3) % 2;
+                        let x, y;
+                        
+                        if (t < 1) {
+                            // Moving from human to tech
+                            x = centerX - 100 + (200 * t);
+                            y = centerY + Math.sin(t * Math.PI) * 50;
+                        } else {
+                            // Moving from tech to human
+                            x = centerX + 100 - (200 * (t - 1));
+                            y = centerY + Math.sin((t - 1) * Math.PI) * -50;
+                        }
+                        
+                        ctx.beginPath();
+                        ctx.arc(x, y, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            animateExtendedCognition(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+
+                // Central brain node
+                ctx.fillStyle = colors.bark;
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 30, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Satellite nodes with labels
+                const satellites = [
+                    {label: 'PAPER', angle: 0},
+                    {label: 'SCREEN', angle: Math.PI * 0.4},
+                    {label: 'ALGORITHM', angle: Math.PI * 0.8},
+                    {label: 'NETWORK', angle: Math.PI * 1.2},
+                    {label: 'AI', angle: Math.PI * 1.6}
+                ];
+
+                satellites.forEach((sat, i) => {
+                    const orbitProgress = Math.min(elapsed / 2, 1);
+                    const currentAngle = sat.angle + elapsed * 0.5 * orbitProgress;
+                    const radius = 150;
+                    
+                    const x = centerX + Math.cos(currentAngle) * radius;
+                    const y = centerY + Math.sin(currentAngle) * radius;
+                    
+                    // Draw satellite
+                    ctx.fillStyle = colors.moss;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 20, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Draw connection to center
+                    ctx.strokeStyle = colors.leaf;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                    
+                    // Draw label
+                    if (elapsed > 1) {
+                        ctx.font = '16px Futura PT, sans-serif';
+                        ctx.fillStyle = '#f4ede1';
+                        ctx.fillText(sat.label, x - 25, y + 35);
+                    }
+                });
+
+                // Pulsing synchronization
+                if (elapsed > 3) {
+                    const pulse = Math.sin(elapsed * 4) * 0.3 + 0.7;
+                    ctx.globalAlpha = pulse;
+                    
+                    // Re-draw all nodes with pulse
+                    ctx.fillStyle = colors.leaf;
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, 30, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    satellites.forEach(sat => {
+                        const currentAngle = sat.angle + elapsed * 0.5;
+                        const x = centerX + Math.cos(currentAngle) * 150;
+                        const y = centerY + Math.sin(currentAngle) * 150;
+                        
+                        ctx.beginPath();
+                        ctx.arc(x, y, 20, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            animateReadingModes(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                const width = canvas.width;
+                const height = canvas.height;
+                
+                // Three sections for three modes
+                const sectionWidth = width / 3;
+                
+                // Mode 1: CLOSE (Square -> many small squares)
+                if (elapsed < 6) {
+                    const mode1Progress = Math.min(elapsed / 2, 1);
+                    const x1 = sectionWidth / 2;
+                    const y1 = height / 2;
+                    
+                    ctx.strokeStyle = colors.bark;
+                    ctx.lineWidth = 3;
+                    
+                    if (mode1Progress < 0.5) {
+                        // Single square
+                        ctx.strokeRect(x1 - 50, y1 - 50, 100, 100);
+                    } else {
+                        // Breaking into smaller squares
+                        const breakProgress = (mode1Progress - 0.5) * 2;
+                        const gridSize = 4;
+                        const cellSize = 100 / gridSize;
+                        
+                        for (let i = 0; i < gridSize; i++) {
+                            for (let j = 0; j < gridSize; j++) {
+                                const offsetX = (i - 1.5) * cellSize * breakProgress;
+                                const offsetY = (j - 1.5) * cellSize * breakProgress;
+                                
+                                ctx.strokeRect(
+                                    x1 - 50 + i * cellSize + offsetX,
+                                    y1 - 50 + j * cellSize + offsetY,
+                                    cellSize, cellSize
+                                );
+                            }
+                        }
+                    }
+                    
+                    if (elapsed > 0.5) {
+                        ctx.font = '18px Futura PT, sans-serif';
+                        ctx.fillStyle = '#f4ede1';
+                        ctx.fillText('CLOSE', x1 - 30, y1 + 80);
+                        ctx.fillText('deep, focused', x1 - 45, y1 + 100);
+                    }
+                }
+                
+                // Mode 2: HYPER (Grid -> flowing lines)
+                if (elapsed > 2 && elapsed < 8) {
+                    const mode2Progress = Math.min((elapsed - 2) / 2, 1);
+                    const x2 = sectionWidth + sectionWidth / 2;
+                    const y2 = height / 2;
+                    
+                    ctx.strokeStyle = colors.moss;
+                    
+                    if (mode2Progress < 0.5) {
+                        // Grid pattern
+                        for (let i = 0; i < 6; i++) {
+                            for (let j = 0; j < 6; j++) {
+                                const x = x2 - 60 + i * 20;
+                                const y = y2 - 60 + j * 20;
+                                
+                                ctx.strokeRect(x, y, 20, 20);
+                            }
+                        }
+                    } else {
+                        // Flowing lines
+                        const flowProgress = (mode2Progress - 0.5) * 2;
+                        
+                        for (let i = 0; i < 8; i++) {
+                            ctx.beginPath();
+                            for (let j = 0; j < 50; j++) {
+                                const x = x2 - 100 + j * 4;
+                                const y = y2 + i * 15 - 60 + Math.sin((elapsed - 2) * 3 + j * 0.1 + i) * 20 * flowProgress;
+                                
+                                if (j === 0) ctx.moveTo(x, y);
+                                else ctx.lineTo(x, y);
+                            }
+                            ctx.stroke();
+                        }
+                    }
+                    
+                    if (elapsed > 2.5) {
+                        ctx.font = '18px Futura PT, sans-serif';
+                        ctx.fillStyle = '#f4ede1';
+                        ctx.fillText('HYPER', x2 - 30, y2 + 80);
+                        ctx.fillText('scanning, filtering', x2 - 65, y2 + 100);
+                    }
+                }
+                
+                // Mode 3: MACHINE (Dots -> pattern recognition)
+                if (elapsed > 4) {
+                    const mode3Progress = Math.min((elapsed - 4) / 2, 1);
+                    const x3 = 2 * sectionWidth + sectionWidth / 2;
+                    const y3 = height / 2;
+                    
+                    ctx.fillStyle = colors.leaf;
+                    
+                    if (mode3Progress < 0.5) {
+                        // Random dots
+                        for (let i = 0; i < 20; i++) {
+                            const x = x3 - 80 + Math.sin(i * 2.5) * 60;
+                            const y = y3 - 80 + Math.cos(i * 3.2) * 60;
+                            
+                            ctx.beginPath();
+                            ctx.arc(x, y, 4, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    } else {
+                        // Pattern emerges
+                        const patternProgress = (mode3Progress - 0.5) * 2;
+                        
+                        for (let i = 0; i < 20; i++) {
+                            const targetX = x3 - 60 + (i % 5) * 30;
+                            const targetY = y3 - 60 + Math.floor(i / 5) * 30;
+                            
+                            const startX = x3 - 80 + Math.sin(i * 2.5) * 60;
+                            const startY = y3 - 80 + Math.cos(i * 3.2) * 60;
+                            
+                            const x = startX + (targetX - startX) * patternProgress;
+                            const y = startY + (targetY - startY) * patternProgress;
+                            
+                            ctx.beginPath();
+                            ctx.arc(x, y, 4, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }
+                    
+                    if (elapsed > 4.5) {
+                        ctx.font = '18px Futura PT, sans-serif';
+                        ctx.fillStyle = '#f4ede1';
+                        ctx.fillText('MACHINE', x3 - 40, y3 + 80);
+                        ctx.fillText('patterns revealed', x3 - 65, y3 + 100);
+                    }
+                }
+            }
+
+            animateMythOS(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+
+                // Three concentric rings
+                const rings = [
+                    {radius: 150, speed: 0.3, label: 'COMBINATORIAL ENGINE'},
+                    {radius: 100, speed: -0.5, label: 'EKPHRASTIC INTERFACE'},
+                    {radius: 50, speed: 0.8, label: 'CULTURAL UNCONSCIOUS'}
+                ];
+
+                rings.forEach((ring, index) => {
+                    const angle = elapsed * ring.speed;
+                    
+                    // Draw ring
+                    ctx.strokeStyle = [colors.bark, colors.moss, colors.leaf][index];
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, ring.radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                    
+                    // Draw rotating marker on ring
+                    const markerX = centerX + Math.cos(angle) * ring.radius;
+                    const markerY = centerY + Math.sin(angle) * ring.radius;
+                    
+                    ctx.fillStyle = [colors.bark, colors.moss, colors.leaf][index];
+                    ctx.beginPath();
+                    ctx.arc(markerX, markerY, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Label
+                    if (elapsed > 1) {
+                        ctx.font = '14px Futura PT, sans-serif';
+                        ctx.fillStyle = '#f4ede1';
+                        const labelX = centerX + Math.cos(Math.PI / 4) * (ring.radius + 30);
+                        const labelY = centerY + Math.sin(Math.PI / 4) * (ring.radius + 30);
+                        
+                        ctx.save();
+                        ctx.translate(labelX, labelY);
+                        ctx.rotate(Math.PI / 4);
+                        ctx.fillText(ring.label, -ring.label.length * 4, 0);
+                        ctx.restore();
+                    }
+                });
+
+                // Alignment moment (system "executing")
+                const alignmentPeriod = 8;
+                const alignmentPhase = (elapsed % alignmentPeriod) / alignmentPeriod;
+                
+                if (alignmentPhase > 0.7 && alignmentPhase < 0.9) {
+                    // Rings align
+                    ctx.strokeStyle = colors.leaf;
+                    ctx.lineWidth = 6;
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY - 150);
+                    ctx.lineTo(centerX, centerY + 150);
+                    ctx.stroke();
+                    
+                    // Flash effect
+                    ctx.fillStyle = `rgba(168, 196, 154, ${Math.sin(elapsed * 20) * 0.5 + 0.5})`;
+                    ctx.beginPath();
+                    ctx.arc(centerX, centerY, 30, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Glitch effect
+                if (elapsed > 6 && Math.random() < 0.1) {
+                    ctx.fillStyle = 'rgba(255, 0, 0, 0.3)';
+                    ctx.fillRect(
+                        Math.random() * canvas.width,
+                        Math.random() * canvas.height,
+                        50, 5
+                    );
+                }
+            }
+
+            animatePolicyFailure(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                // Beautiful network (first)
+                if (elapsed < 3) {
+                    const nodes = [
+                        {x: canvas.width * 0.2, y: canvas.height * 0.3},
+                        {x: canvas.width * 0.8, y: canvas.height * 0.4},
+                        {x: canvas.width * 0.5, y: canvas.height * 0.7},
+                        {x: canvas.width * 0.3, y: canvas.height * 0.6},
+                        {x: canvas.width * 0.7, y: canvas.height * 0.2},
+                        {x: canvas.width * 0.4, y: canvas.height * 0.4}
+                    ];
+
+                    // Draw connections
+                    ctx.strokeStyle = colors.leaf;
+                    ctx.lineWidth = 2;
+                    
+                    for (let i = 0; i < nodes.length; i++) {
+                        for (let j = i + 1; j < nodes.length; j++) {
+                            ctx.beginPath();
+                            ctx.moveTo(nodes[i].x, nodes[i].y);
+                            ctx.lineTo(nodes[j].x, nodes[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                    
+                    // Draw nodes
+                    ctx.fillStyle = colors.bark;
+                    nodes.forEach(node => {
+                        ctx.beginPath();
+                        ctx.arc(node.x, node.y, 8, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                }
+
+                // Checkboxes slam down
+                if (elapsed > 2) {
+                    const checkboxProgress = Math.min((elapsed - 2) / 2, 1);
+                    const checkboxSize = 80;
+                    
+                    // YES/NO checkboxes falling from top
+                    for (let i = 0; i < 6; i++) {
+                        for (let j = 0; j < 4; j++) {
+                            const x = (canvas.width / 7) * (i + 1) - checkboxSize / 2;
+                            const startY = -checkboxSize;
+                            const endY = (canvas.height / 5) * (j + 1);
+                            const currentY = startY + (endY - startY) * checkboxProgress;
+                            
+                            // Checkbox background
+                            ctx.fillStyle = 'rgba(139, 115, 85, 0.8)';
+                            ctx.fillRect(x, currentY, checkboxSize, checkboxSize);
+                            
+                            // Checkbox border
+                            ctx.strokeStyle = colors.moss;
+                            ctx.lineWidth = 3;
+                            ctx.strokeRect(x, currentY, checkboxSize, checkboxSize);
+                            
+                            // YES/NO text
+                            ctx.font = '16px Futura PT, sans-serif';
+                            ctx.fillStyle = '#f4ede1';
+                            const text = (i + j) % 2 === 0 ? 'YES' : 'NO';
+                            ctx.fillText(text, x + 25, currentY + 45);
+                        }
+                    }
+                }
+
+                // Network breaking apart
+                if (elapsed > 4) {
+                    const breakProgress = Math.min((elapsed - 4) / 2, 1);
+                    
+                    const brokenNodes = [
+                        {x: canvas.width * 0.2, y: canvas.height * 0.3, vx: -50, vy: -30},
+                        {x: canvas.width * 0.8, y: canvas.height * 0.4, vx: 70, vy: -20},
+                        {x: canvas.width * 0.5, y: canvas.height * 0.7, vx: 0, vy: 40},
+                        {x: canvas.width * 0.3, y: canvas.height * 0.6, vx: -30, vy: 50},
+                        {x: canvas.width * 0.7, y: canvas.height * 0.2, vx: 60, vy: -60}
+                    ];
+
+                    // Draw scattered nodes
+                    ctx.fillStyle = colors.moss;
+                    brokenNodes.forEach(node => {
+                        const x = node.x + node.vx * breakProgress;
+                        const y = node.y + node.vy * breakProgress;
+                        
+                        ctx.globalAlpha = 1 - breakProgress * 0.7;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 8, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+            animateWhatDies(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                // Three withering organic forms
+                const forms = [
+                    {x: canvas.width * 0.2, y: canvas.height * 0.5, label: 'INSTITUTION'},
+                    {x: canvas.width * 0.5, y: canvas.height * 0.5, label: 'DOCUMENTATION'},
+                    {x: canvas.width * 0.8, y: canvas.height * 0.5, label: 'INTEGRITY'}
+                ];
+
+                forms.forEach((form, index) => {
+                    const decayProgress = Math.min(elapsed / 4, 1);
+                    const regenProgress = Math.max(0, Math.min((elapsed - 5) / 2, 1));
+                    
+                    // Organic shape that withers then regenerates
+                    const baseRadius = 60;
+                    const segments = 12;
+                    
+                    ctx.strokeStyle = colors.bark;
+                    ctx.fillStyle = `rgba(139, 115, 85, ${0.5 - decayProgress * 0.4 + regenProgress * 0.3})`;
+                    ctx.lineWidth = 3;
+                    
+                    ctx.beginPath();
+                    for (let i = 0; i <= segments; i++) {
+                        const angle = (i / segments) * Math.PI * 2;
+                        const radiusVariation = Math.sin(angle * 3 + elapsed) * 20;
+                        const decayFactor = 1 - decayProgress * 0.7 + regenProgress * 0.5;
+                        const radius = (baseRadius + radiusVariation) * decayFactor;
+                        
+                        const x = form.x + Math.cos(angle) * radius;
+                        const y = form.y + Math.sin(angle) * radius;
+                        
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    // Label
+                    ctx.font = '18px Futura PT, sans-serif';
+                    ctx.fillStyle = `rgba(244, 237, 225, ${1 - decayProgress * 0.8 + regenProgress})`;
+                    ctx.fillText(form.label, form.x - 50, form.y + 100);
+                });
+
+                // Decay particles
+                if (elapsed > 2 && elapsed < 5) {
+                    ctx.fillStyle = colors.moss;
+                    for (let i = 0; i < 20; i++) {
+                        const x = (canvas.width * 0.6) * Math.random() + canvas.width * 0.2;
+                        const y = canvas.height * 0.3 + (elapsed - 2) * 100 + i * 10;
+                        
+                        ctx.globalAlpha = Math.max(0, 1 - (elapsed - 2) / 3);
+                        ctx.beginPath();
+                        ctx.arc(x, y, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.globalAlpha = 1;
+                }
+            }
+
+
+
+            animateClosing(ctx, canvas, elapsed) {
+                const colors = {
+                    bark: '#8b7355',
+                    moss: '#4a5f3b',
+                    leaf: '#a8c49a'
+                };
+
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+
+                // Breathing ecosystem - slow, organic rhythm
+                const breathScale = 1 + Math.sin(elapsed * 0.8) * 0.15;
+                
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.scale(breathScale, breathScale);
+                ctx.translate(-centerX, -centerY);
+
+                // Full mycorrhizal network
+                const networkNodes = [];
+                const gridSize = 6;
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        const x = centerX + (i - gridSize/2) * 80 + Math.sin(elapsed * 0.5 + i + j) * 15;
+                        const y = centerY + (j - gridSize/2) * 60 + Math.cos(elapsed * 0.7 + i + j) * 10;
+                        const isHuman = (i + j) % 3 === 0;
+                        const isAI = (i + j) % 3 === 1;
+                        networkNodes.push({x, y, type: isHuman ? 'human' : isAI ? 'ai' : 'hybrid'});
+                    }
+                }
+
+                // Draw network connections
+                ctx.strokeStyle = `rgba(168, 196, 154, ${0.3 + Math.sin(elapsed * 2) * 0.2})`;
+                ctx.lineWidth = 2;
+                
+                networkNodes.forEach((node, i) => {
+                    networkNodes.forEach((otherNode, j) => {
+                        if (i < j) {
+                            const distance = Math.sqrt(
+                                Math.pow(otherNode.x - node.x, 2) + 
+                                Math.pow(otherNode.y - node.y, 2)
+                            );
+                            
+                            if (distance < 120) {
+                                ctx.globalAlpha = 1 - (distance / 120) * 0.7;
+                                ctx.beginPath();
+                                ctx.moveTo(node.x, node.y);
+                                ctx.lineTo(otherNode.x, otherNode.y);
+                                ctx.stroke();
+                            }
+                        }
+                    });
+                });
+                
+                ctx.globalAlpha = 1;
+
+                // Draw nodes with type-specific colors
+                networkNodes.forEach(node => {
+                    const nodeSize = 6 + Math.sin(elapsed * 3 + node.x * 0.01 + node.y * 0.01) * 2;
+                    
+                    switch(node.type) {
+                        case 'human':
+                            ctx.fillStyle = colors.bark;
+                            break;
+                        case 'ai':
+                            ctx.fillStyle = colors.moss;
+                            break;
+                        default:
+                            ctx.fillStyle = colors.leaf;
+                    }
+                    
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, nodeSize, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Subtle glow
+                    const glowIntensity = Math.sin(elapsed * 2 + node.x * 0.02) * 0.3 + 0.4;
+                    ctx.fillStyle = `rgba(168, 196, 154, ${glowIntensity * 0.3})`;
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, nodeSize + 4, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                // Information flow particles
+                ctx.fillStyle = colors.leaf;
+                for (let i = 0; i < 20; i++) {
+                    const t = (elapsed * 0.4 + i * 0.1) % 1;
+                    const sourceIndex = Math.floor(i / 2);
+                    const targetIndex = (sourceIndex + 1 + Math.floor(i / 4)) % networkNodes.length;
+                    
+                    const source = networkNodes[sourceIndex];
+                    const target = networkNodes[targetIndex];
+                    
+                    if (source && target) {
+                        const x = source.x + (target.x - source.x) * t;
+                        const y = source.y + (target.y - source.y) * t;
+                        
+                        ctx.globalAlpha = Math.sin(t * Math.PI) * 0.8;
+                        ctx.beginPath();
+                        ctx.arc(x, y, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                
+                ctx.globalAlpha = 1;
+                ctx.restore();
+
+                // Final question visualization
+                if (elapsed > 8) {
+                    const questionAlpha = Math.min((elapsed - 8) / 3, 0.8);
+                    ctx.fillStyle = `rgba(244, 237, 225, ${questionAlpha})`;
+                    ctx.font = `${Math.floor(18 * breathScale)}px FKGroteskNeue, sans-serif`;
+                    ctx.textAlign = 'center';
+                    
+                    const questionY = centerY + 180;
+                    ctx.fillText('Can we think ecologically about thinking itself?', centerX, questionY);
+                }
+            }
+
+            nextSlide() {
+                if (this.currentSlide < this.totalSlides - 1) {
+                    this.stopCurrentAnimation();
+                    this.currentSlide++;
+                    this.updateSlideVisibility();
+                    this.startSlideAnimation(this.currentSlide);
+                    this.updateProgress();
+                    this.updateNotes();
+                }
+            }
+
+            prevSlide() {
+                if (this.currentSlide > 0) {
+                    this.stopCurrentAnimation();
+                    this.currentSlide--;
+                    this.updateSlideVisibility();
+                    this.startSlideAnimation(this.currentSlide);
+                    this.updateProgress();
+                    this.updateNotes();
+                }
+            }
+
+            updateSlideVisibility() {
+                const slides = document.querySelectorAll('.slide');
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === this.currentSlide);
+                });
+            }
+
+            startSlideAnimation(slideIndex) {
+                if (this.animationFrames[slideIndex]) {
+                    this.animationFrames[slideIndex].start();
+                }
+            }
+
+            stopCurrentAnimation() {
+                if (this.animationFrames[this.currentSlide]) {
+                    this.animationFrames[this.currentSlide].stop();
+                }
+            }
+
+            updateProgress() {
+                const progressEl = document.querySelector('.progress');
+                progressEl.textContent = `${this.currentSlide + 1} / ${this.totalSlides}`;
+            }
+
+            togglePresentationMode() {
+                this.isPresenting = !this.isPresenting;
+                
+                if (this.isPresenting) {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                    });
+                    
+                    // Hide UI elements in presentation mode
+                    document.querySelector('.progress').style.display = 'none';
+                    document.querySelector('.nav-hint').style.display = 'none';
+                    document.querySelector('.notes-toggle').style.display = 'none';
+                } else {
+                    if (document.fullscreenElement) {
+                        document.exitFullscreen();
+                    }
+                    
+                    // Show UI elements
+                    document.querySelector('.progress').style.display = 'block';
+                    document.querySelector('.nav-hint').style.display = 'block';
+                    document.querySelector('.notes-toggle').style.display = 'block';
+                }
+            }
+        }
+
+        // Initialize presentation
+        document.addEventListener('DOMContentLoaded', () => {
+            new PresentationAnimator();
+            
+            // Add loading state management
+            document.body.classList.add('loaded');
+            
+            // Handle fullscreen changes
+            document.addEventListener('fullscreenchange', () => {
+                if (!document.fullscreenElement) {
+                    // Exited fullscreen, show UI elements
+                    document.querySelector('.progress').style.display = 'block';
+                    document.querySelector('.nav-hint').style.display = 'block';
+                    document.querySelector('.notes-toggle').style.display = 'block';
+                }
+            });
+            
+            // Prevent right-click context menu in presentation
+            document.addEventListener('contextmenu', (e) => {
+                e.preventDefault();
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                const canvases = document.querySelectorAll('canvas');
+                canvases.forEach(canvas => {
+                    canvas.width = canvas.offsetWidth;
+                    canvas.height = canvas.offsetHeight;
+                });
+            });
+        });
+        
+        // Service Worker for offline capability (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Could register a service worker here for offline use
+            });
+        }
+    </script>
+</body>
+</html>

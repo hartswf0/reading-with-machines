@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Scientific Dial Cipher</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        /* Using Share Tech Mono for a good digital-style monospace font.
+           It's generally more consistently monospace than Orbitron for all characters. */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Courier New', monospace; /* Default fallback */
+            background: #000;
+            color: #0f0;
+        }
+
+        .app {
+            height: 100vh;
+            display: grid;
+            grid-template-rows: auto auto 1fr; /* Top readout, Control panel, then main content */
+            background: radial-gradient(circle at center, #001a00 0%, #000 100%);
+        }
+
+        /* --- NEW: Minimal Header Readout --- */
+        .header-readout {
+            background: rgba(0, 26, 0, 0.9);
+            border-bottom: 2px solid #0f0;
+            padding: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end; /* Align contents to the bottom for calculator aesthetic */
+            min-height: 48px; /* Ensure sufficient height for values and hint */
+            box-sizing: border-box;
+            flex-shrink: 0; /* Prevent header from shrinking */
+        }
+
+        .z-lock-display-area {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex-shrink: 0; /* Prevent shrinking */
+            min-width: 150px; /* Absolute minimum width for Z-LOCK area */
+            margin-right: 10px; /* Space between the two main readouts */
+        }
+        
+        .z-indicator {
+            font-size: 24px;
+            color: #ff0;
+            text-shadow: 0 0 10px #ff0;
+            display: flex;
+            align-items: center;
+            /* Removed 'gap' as Z-LOCK: label is gone, now just the value */
+            white-space: nowrap; /* Prevent Z-LOCK text from wrapping */
+        }
+
+        /* Styling for the Z-LOCK reading value itself */
+        .reading {
+            font-size: 20px;
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff; /* Stronger glow */
+            letter-spacing: 2px;
+            font-family: 'Share Tech Mono', 'Consolas', 'Monaco', 'Courier New', monospace; /* Digital monospace font */
+            min-width: 8ch; /* 4 chars + 4 separators */
+            text-align: left;
+            display: inline-block; /* Essential for min-width to work reliably */
+            vertical-align: bottom; /* Align with R-DEGREE if it has variable height */
+        }
+
+        .z-lock-info {
+            font-size: 9px;
+            color: #ff0;
+            opacity: 0.7;
+            margin-top: -5px; /* Pull it closer to Z-LOCK text */
+            white-space: nowrap;
+            padding-left: 2px; /* Small alignment adjustment for ↑INDEX */
+        }
+
+        .r-degree-display-area {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Right align degree */
+            flex-shrink: 0; /* Prevent shrinking */
+            min-width: 120px; /* Absolute minimum width for 000.000 */
+        }
+        
+        /* Styling for the R-DEGREE value itself */
+        .degree-readout {
+            font-size: 22px; /* Slightly larger for emphasis */
+            color: #0ff;
+            text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 15px #0ff; /* Stronger glow */
+            letter-spacing: 1px;
+            font-family: 'Share Tech Mono', 'Consolas', 'Monaco', 'Courier New', monospace; /* Digital monospace font */
+            min-width: 7ch; /* For 000.000 */
+            text-align: right;
+            display: inline-block; /* Essential for min-width to work reliably */
+            vertical-align: bottom;
+        }
+        /* --- END NEW: Minimal Header Readout --- */
+
+
+        /* --- Control Panel (formerly footer) --- */
+        .footer { /* Keeping 'footer' class for now as per previous instructions */
+            background: rgba(0, 26, 0, 0.9);
+            border-bottom: 2px solid #0f0; /* Separates from main dial area */
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 40vh; /* Allow scrolling if too much content for screen height */
+            overflow-y: auto;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        .io-row {
+            display: flex;
+            gap: 6px;
+            align-items: stretch;
+        }
+
+        input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0f0;
+            color: #0f0;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ff0;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+        }
+
+        .btn {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0f0;
+            color: #0f0;
+            padding: 10px 14px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .btn.encode {
+            border-color: #f0f;
+            color: #f0f;
+            text-shadow: 0 0 8px #f0f;
+        }
+
+        .btn.decode {
+            border-color: #0ff;
+            color: #0ff;
+            text-shadow: 0 0 8px #0ff;
+        }
+
+        .btn.active {
+            animation: pulse 0.5s infinite;
+        }
+
+        .output {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #0ff;
+            color: #0ff;
+            padding: 8px;
+            font-size: 12px;
+            min-height: 50px;
+            word-break: break-all;
+            line-height: 1.5;
+            margin-top: 6px;
+            overflow-y: auto; /* Enable scroll for output */
+            white-space: pre-wrap; /* Preserve spaces and line breaks */
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-top: 6px;
+        }
+
+        .status {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff0;
+            color: #ff0;
+            padding: 6px;
+            text-align: center;
+            font-size: 11px;
+            margin-top: 6px;
+        }
+        /* --- END Control Panel --- */
+
+        /* --- Main Dial Area --- */
+        .main {
+            display: grid;
+            grid-template-columns: 1fr;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .ring-indicator {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #0f0;
+            padding: 6px;
+            font-size: 10px;
+            z-index: 10;
+        }
+
+        .ring-info {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .ring-badge {
+            padding: 4px 8px;
+            border: 1px solid #0f0;
+            font-size: 10px;
+        }
+
+        .ring-badge.active {
+            border-color: #ff0;
+            color: #ff0;
+            box-shadow: 0 0 10px #ff0;
+        }
+
+        .dial-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+            position: relative;
+        }
+        
+        /* Highlight entire ring group with filter (instead of stroke) */
+        .ring-group.ring-group-active {
+            filter: drop-shadow(0 0 15px #ff0);
+        }
+
+        /* Dim characters on the active ring that are NOT the active character */
+        .ring-group.ring-group-active .ring-text:not(.active-char) {
+            opacity: 0.2;
+            transition: opacity 0.3s;
+        }
+
+        svg {
+            width: 90%;
+            height: 90%;
+            max-width: 500px;
+            max-height: 500px;
+            filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.5));
+        }
+
+        .ring-segment {
+            fill: none;
+            stroke: #0f0;
+            stroke-width: 2;
+            opacity: 0.3;
+        }
+
+        .ring-text {
+            font-family: 'Courier New', monospace;
+            font-size: 22px;
+            font-weight: bold;
+            fill: #0f0;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            pointer-events: none;
+            user-select: none;
+            text-shadow: 0 0 5px #0f0;
+            transition: all 0.2s; /* Smooth transition for active-char class */
+        }
+
+        .ring-text.active-char {
+            fill: #ff0; /* Change color */
+            text-shadow: 0 0 15px #ff0, 0 0 25px #ff0; /* Add stronger glow */
+            font-size: 24px; /* Make it slightly bigger */
+            opacity: 1 !important; /* Ensure it's not dimmed by other rules */
+        }
+
+        .ring-interactive {
+            fill: none;
+            stroke: none;
+            cursor: grab;
+            opacity: 0;
+        }
+
+        .ring-interactive:active {
+            cursor: grabbing;
+        }
+
+        .index-marker {
+            stroke: #ff0;
+            stroke-width: 5;
+            fill: none;
+            filter: drop-shadow(0 0 15px #ff0);
+        }
+
+        .index-text {
+            font-family: 'Courier New', monospace;
+            font-size: 56px;
+            font-weight: bold;
+            fill: #ff0;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            text-shadow: 0 0 15px #ff0;
+        }
+
+        .center-lock {
+            fill: #001a00;
+            stroke: #0f0;
+            stroke-width: 4;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Apply spin to labels group within the dial-container when .spinning is active */
+        .dial-container.spinning .labels {
+            animation: spin 2s linear infinite;
+        }
+
+        .highlight-encode {
+            filter: drop-shadow(0 0 20px #f0f) !important;
+        }
+
+        .highlight-decode {
+            filter: drop-shadow(0 0 20px #0ff) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- NEW: Minimal Header Readout Panel -->
+        <div class="header-readout">
+            <div class="z-lock-display-area">
+                <div class="z-indicator">
+                    <span class="reading" id="reading">----</span>
+                </div>
+                <div class="z-lock-info">↑INDEX</div>
+            </div>
+            <div class="r-degree-display-area">
+                <span class="degree-readout" id="degreeReadout">----</span>
+            </div>
+        </div>
+
+        <!-- Control Panel (formerly footer) -->
+        <div class="footer">
+            <div class="io-row">
+                <input id="msg" placeholder="TYPE MESSAGE" />
+                <button class="btn encode" id="encBtn">⚡ENC</button>
+                <button class="btn decode" id="decBtn">⚡DEC</button>
+            </div>
+            <div class="output" id="out">OUTPUT...</div>
+            <div class="btn-row">
+                <button class="btn" id="demoBtn">▶DEMO</button>
+                <button class="btn" id="rstBtn">⟲RST</button>
+                <button class="btn" id="cpyBtn">📋CPY</button>
+                <button class="btn" id="sndBtn">♪ON</button>
+            </div>
+            <div class="status" id="status">Z-LOCK is the FIXED INDEX at top. Rings rotate, Z stays fixed. Reading at Z = your code.</div>
+        </div>
+
+        <div class="main">
+            <div class="ring-indicator">
+                <div>RINGS</div>
+                <div class="ring-info">
+                    <div class="ring-badge" id="r1badge">R1</div>
+                    <div class="ring-badge" id="r2badge">R2</div>
+                    <div class="ring-badge" id="r3badge">R3</div>
+                    <div class="ring-badge" id="r4badge">R4</div>
+                </div>
+            </div>
+            <div class="dial-container" id="dial"></div>
+        </div>
+    </div>
+
+    <script>
+        let synth = null;
+        let sound = true;
+        let busy = false;
+        let searchAnimationInterval = null; // To control the decoding search animation
+        const outputDiv = document.getElementById('out'); // Reference to output div for autoscroll
+        const degreeReadout = document.getElementById('degreeReadout'); // Reference to degree readout
+        const dialContainer = document.getElementById('dial'); // Reference to dial container for animation class
+
+        async function initAudio() {
+            if (!synth) {
+                await Tone.start();
+                synth = new Tone.Synth({
+                    oscillator: { type: 'square' },
+                    envelope: { attack: 0.005, decay: 0.1, sustain: 0.1, release: 0.2 }
+                }).toDestination();
+                synth.volume.value = -10;
+            }
+        }
+
+        function beep(freq = 500, dur = 0.05) {
+            if (sound && synth) synth.triggerAttackRelease(freq, dur);
+        }
+
+        function vib() {
+            if (navigator.vibrate) navigator.vibrate(10);
+        }
+
+        const rings = [
+            { id: 'r1', r: 220, w: 40, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''), rot: 0, color: '#f0f', index: 0 },
+            { id: 'r2', r: 170, w: 35, chars: '0123456789ABCDEFGHIJKLMNOP'.split(''), rot: 0, color: '#0ff', index: 1 },
+            { id: 'r3', r: 125, w: 30, chars: 'abcdefghijklmnopqrstuvwxyz'.split(''), rot: 0, color: '#f80', index: 2 },
+            // DESIGNATED SPACE CHARACTER: '~' (tilde) - Make sure '~' is in this array
+            { id: 'r4', r: 85, w: 25, chars: '!@#$%^&*+-=<>?/~'.split(''), rot: 0, color: '#0f0', index: 3 } 
+        ];
+
+        let active = null;
+        let startAng = 0;
+        let startRot = 0;
+
+        // --- Utility for Formatting Degree Readout ---
+        function formatDegree(degree) {
+            const normalized = ((degree % 360) + 360) % 360; // Ensure 0-359.999
+            const fixed = normalized.toFixed(3); // Fix to 3 decimal places
+            const [integerPart, decimalPart] = fixed.split('.');
+            const paddedInteger = integerPart.padStart(3, '0'); // Pad with leading zeros
+            return `${paddedInteger}.${decimalPart}`;
+        }
+
+        function createDial() {
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '-260 -260 520 520');
+            dialContainer.appendChild(svg); // Use dialContainer reference
+
+            rings.forEach((ring) => {
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('data-ring', ring.id);
+                g.setAttribute('id', ring.id); // Add ID to the main ring group for easier selection
+                g.setAttribute('class', 'ring-group'); // Add a class for generic ring group styling
+
+                const n = ring.chars.length;
+                const step = 360 / n;
+
+                for (let i = 0; i < n; i++) {
+                    const a1 = i * step - 90;
+                    const a2 = (i + 1) * step - 90;
+                    const r1 = a1 * Math.PI / 180;
+                    const r2 = a2 * Math.PI / 180;
+                    const inner = ring.r - ring.w / 2;
+                    const outer = ring.r + ring.w / 2;
+                    
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('class', 'ring-segment');
+                    path.setAttribute('d', `
+                        M ${Math.cos(r1)*inner} ${Math.sin(r1)*inner}
+                        L ${Math.cos(r2)*inner} ${Math.sin(r2)*inner}
+                        L ${Math.cos(r2)*outer} ${Math.sin(r2)*outer}
+                        L ${Math.cos(r1)*outer} ${Math.sin(r1)*outer} Z
+                    `);
+                    g.appendChild(path);
+                }
+
+                const lg = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                lg.setAttribute('class', 'labels');
+
+                ring.chars.forEach((c, i) => {
+                    const a = (i + 0.5) * step - 90;
+                    const r = a * Math.PI / 180;
+                    const x = Math.cos(r) * ring.r;
+                    const y = Math.sin(r) * ring.r;
+
+                    const t = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    t.setAttribute('class', 'ring-text');
+                    t.setAttribute('x', x);
+                    t.setAttribute('y', y);
+                    t.textContent = c;
+                    lg.appendChild(t);
+                });
+
+                g.appendChild(lg);
+
+                const hit = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                hit.setAttribute('class', 'ring-interactive');
+                hit.setAttribute('r', ring.r);
+                hit.setAttribute('stroke-width', ring.w);
+                hit.setAttribute('stroke', '#0f0');
+                g.appendChild(hit);
+
+                svg.appendChild(g);
+            });
+
+            const idx = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            idx.setAttribute('class', 'index-marker');
+            idx.setAttribute('x1', 0);
+            idx.setAttribute('y1', -250);
+            idx.setAttribute('x2', 0);
+            idx.setAttribute('y2', -190); /* Adjusted to point clearly at characters on outermost ring */
+            svg.appendChild(idx);
+
+            const itxt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            itxt.setAttribute('class', 'index-text');
+            itxt.setAttribute('x', 0);
+            itxt.setAttribute('y', -255);
+            itxt.textContent = 'Z';
+            svg.appendChild(itxt);
+
+            const ctr = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            ctr.setAttribute('class', 'center-lock');
+            ctr.setAttribute('r', 50);
+            svg.appendChild(ctr);
+
+            const ctx = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            ctx.setAttribute('class', 'ring-text');
+            ctx.setAttribute('font-size', '18');
+            ctx.setAttribute('y', 8);
+            ctx.textContent = 'LOCK';
+            svg.appendChild(ctx);
+
+            updateRead();
+        }
+
+        // --- Ring Rotation & Readout Logic ---
+        function setRingRotation(ringId, rotationAngle, smooth = false) {
+            const ring = rings.find(r => r.id === ringId);
+            if (!ring) return;
+
+            ring.rot = ((rotationAngle % 360) + 360) % 360; // Normalize angle
+
+            const gLabels = document.querySelector(`#${ringId} .labels`); // Target the labels group
+            if (gLabels) {
+                if (smooth) {
+                    gLabels.style.transition = 'transform 0.6s ease-out';
+                } else {
+                    gLabels.style.transition = 'none';
+                }
+                gLabels.setAttribute('transform', `rotate(${ring.rot})`);
+            }
+        }
+
+        function updateRing(id, rot, smooth = false, showDegree = true) {
+            setRingRotation(id, rot, smooth); // Set rotation
+            updateRead(); // Update the Z-LOCK reading
+
+            if (showDegree) {
+                const ring = rings.find(r => r.id === id);
+                if (ring) {
+                    degreeReadout.textContent = formatDegree(ring.rot);
+                }
+            } else if (!active && !busy) { // If not showing degree and no ring is active and not busy, clear it
+                degreeReadout.textContent = '----';
+            }
+        }
+
+        // Updated highlightRing to apply class to the main ring group (g element)
+        function highlightRing(id, on) {
+            const ringGroup = document.getElementById(id); // Get the main <g> element for the ring
+            const badge = document.getElementById(id + 'badge');
+            if (ringGroup) {
+                if (on) {
+                    ringGroup.classList.add('ring-group-active');
+                    badge.classList.add('active');
+                } else {
+                    ringGroup.classList.remove('ring-group-active');
+                    badge.classList.remove('active');
+                }
+            }
+        }
+
+        // New helper to clear ALL individual character highlights across ALL rings
+        function clearAllCharHighlights() {
+            rings.forEach(ring => {
+                const ringElement = document.getElementById(ring.id);
+                if (ringElement) {
+                    ringElement.querySelectorAll('.ring-text.active-char').forEach(el => {
+                        el.classList.remove('active-char');
+                    });
+                }
+            });
+            dialContainer.removeAttribute('data-active-ring'); // Clear global dimming too
+        }
+
+        // Function to highlight a specific character within a ring
+        function highlightCharacterOnDial(ringId, character, on) {
+            const ringElement = document.getElementById(ringId); // Get the main <g> element for the ring
+            if (!ringElement || character === '') {
+                 // If turning off or character is empty, ensure the data-active-ring is cleared if this was the last active
+                if (!on && dialContainer.getAttribute('data-active-ring') === ringId) {
+                    dialContainer.removeAttribute('data-active-ring');
+                }
+                return;
+            }
+
+            const charElements = ringElement.querySelectorAll('.ring-text');
+            for (const charEl of charElements) {
+                if (charEl.textContent === character) {
+                    if (on) {
+                        charEl.classList.add('active-char');
+                        dialContainer.setAttribute('data-active-ring', ringId); // Set the ring containing the highlighted char
+                    } else {
+                        charEl.classList.remove('active-char');
+                    }
+                    break;
+                }
+            }
+        }
+
+        function updateRead() {
+            let code = '';
+            rings.forEach(ring => {
+                const step = 360 / ring.chars.length;
+                const norm = ((-ring.rot + 90 + 360) % 360);
+                const idx = Math.floor(norm / step + 0.0000001) % ring.chars.length; // Epsilon for precision
+                code += ring.chars[idx];
+            });
+            document.getElementById('reading').textContent = code;
+        }
+
+        // --- Helper Functions for Cipher Logic ---
+        function getCharIndexOnRing(ring, char) {
+            return ring.chars.indexOf(char);
+        }
+
+        function calculateRingRotationForChar(ring, char) {
+            const index = getCharIndexOnRing(ring, char);
+            if (index === -1) return false;
+            const step = 360 / ring.chars.length;
+            
+            let targetRot = (90 - (index * step));
+            return ((targetRot % 360) + 360) % 360;
+        }
+
+        // This `getCodeInternal` function is crucial for decoding. It reads the current state
+        // of `ring.rot` values (which might be temporarily manipulated) without triggering DOM updates.
+        function getCodeInternal() {
+            let code = '';
+            rings.forEach(ring => {
+                const step = 360 / ring.chars.length;
+                const norm = ((-ring.rot + 90 + 360) % 360);
+                const idx = Math.floor(norm / step + 0.0000001) % ring.chars.length;
+                code += ring.chars[idx];
+            });
+            return code;
+        }
+
+        function setStatus(txt) {
+            document.getElementById('status').textContent = txt;
+        }
+
+        // --- Encoding Logic ---
+        async function encode() {
+            if (busy) return;
+            busy = true;
+            
+            const msg = document.getElementById('msg').value;
+            if (!msg) {
+                setStatus('Type message first!');
+                beep(200);
+                busy = false;
+                return;
+            }
+
+            outputDiv.textContent = '';
+            outputDiv.scrollTop = outputDiv.scrollHeight; // Autoscroll
+            document.getElementById('encBtn').classList.add('active');
+            setStatus('🔴 ENCODING...');
+            
+            const svg = document.querySelector('svg');
+            svg.classList.add('highlight-encode');
+            
+            let codes = [];
+            
+            for (let i = 0; i < msg.length; i++) {
+                let c = msg[i]; // Original character from input
+                let charToProcess = c; // Character to look up on the rings
+
+                // Handle space specifically: convert to designated '~' char
+                if (c === ' ') {
+                    charToProcess = '~';
+                }
+
+                let foundOnRing = null;
+                for (let rIdx = 0; rIdx < rings.length; rIdx++) {
+                    if (getCharIndexOnRing(rings[rIdx], charToProcess) !== -1) {
+                        foundOnRing = rings[rIdx];
+                        break;
+                    }
+                }
+
+                if (!foundOnRing) {
+                    codes.push('[' + c + ']'); // Preserve original character in brackets
+                    setStatus(`Character '${c}' not encodable, passing through.`);
+                    outputDiv.textContent = codes.join(' ');
+                    outputDiv.scrollTop = outputDiv.scrollHeight;
+                    await sleep(200);
+                    continue;
+                }
+
+                const sourceRingRot = calculateRingRotationForChar(foundOnRing, charToProcess);
+                let baseRotation = (sourceRingRot - (foundOnRing.index * 60));
+                baseRotation = ((baseRotation % 360) + 360) % 360;
+
+                // Clear any previous character highlights before setting new ones
+                clearAllCharHighlights(); 
+
+                rings.forEach((ring, j) => {
+                    highlightRing(ring.id, true); // Keep entire ring glowing
+                    const offset = j * 60;
+                    updateRing(ring.id, baseRotation + offset, true, (j === foundOnRing.index)); // Show degree for the 'source' ring
+                });
+                highlightCharacterOnDial(foundOnRing.id, charToProcess, true); // Highlight the specific character
+                
+                beep(400 + i * 30, 0.1);
+                await sleep(800);
+                
+                const code = getCodeInternal(); // Use internal to read current state
+                codes.push(code);
+                outputDiv.textContent = codes.join(' ');
+                outputDiv.scrollTop = outputDiv.scrollHeight; // Autoscroll
+                
+                rings.forEach(ring => highlightRing(ring.id, false)); // Clear overall ring glow
+                clearAllCharHighlights(); // Clear character highlight and data-active-ring
+                degreeReadout.textContent = '----'; // Clear degree readout after each character
+                beep(600, 0.15);
+                vib();
+                await sleep(200);
+            }
+            
+            svg.classList.remove('highlight-encode');
+            document.getElementById('encBtn').classList.remove('active');
+            setStatus('✓ ENCODED! Each encodable char → 4-char code');
+            beep(700, 0.3);
+            busy = false;
+            degreeReadout.textContent = '----'; // Clear degree readout at end of session
+        }
+
+        // --- Decoding Logic ---
+        async function decode() {
+            if (busy) return;
+            busy = true;
+            
+            const input = document.getElementById('msg').value.trim();
+            if (!input) {
+                setStatus('Paste encoded message!');
+                beep(200);
+                busy = false;
+                return;
+            }
+
+            const codes = input.split(/\s+/).filter(c => c.length > 0);
+            outputDiv.textContent = '';
+            outputDiv.scrollTop = outputDiv.scrollHeight; // Autoscroll
+            document.getElementById('decBtn').classList.add('active');
+            setStatus('🔵 DECODING...');
+            
+            const svg = document.querySelector('svg');
+            svg.classList.add('highlight-decode');
+            
+            let decoded = '';
+
+            const allEncodableChars = [];
+            rings.forEach(ring => {
+                ring.chars.forEach(char => allEncodableChars.push(char));
+            });
+            const uniqueEncodableChars = Array.from(new Set(allEncodableChars));
+
+            // Ensure clean state before starting decoding loop
+            clearAllCharHighlights(); 
+            rings.forEach(ring => highlightRing(ring.id, false)); // Clear overall ring glow
+            dialContainer.classList.remove('spinning'); // Ensure spinning is off initially
+
+            // Start visual search animation
+            let currentVisualRotationOffset = 0;
+            
+            searchAnimationInterval = setInterval(() => {
+                rings.forEach((ring, k) => {
+                    highlightRing(ring.id, true); // Keep rings glowing during search
+                    const gLabels = document.querySelector(`#${ring.id} .labels`); // Target specific ring's labels group
+                    if (gLabels) {
+                        gLabels.style.transition = 'none'; // No smooth transition for rapid spinning
+                        gLabels.setAttribute('transform', `rotate(${currentVisualRotationOffset + (k * 60)}deg)`);
+                    }
+                });
+                currentVisualRotationOffset = (currentVisualRotationOffset + 45) % 360; // Faster spin for visual search
+                dialContainer.classList.add('spinning'); // Add spinning class to trigger CSS animation
+                degreeReadout.textContent = '----'; // Keep degree readout cleared during search
+            }, 60); 
+
+
+            for (let i = 0; i < codes.length; i++) {
+                const code = codes[i];
+                
+                if (code.startsWith('[') && code.endsWith(']')) {
+                    decoded += code.slice(1, -1); // Extract original character from brackets
+                    setStatus(`Decoded unencodable: ${code.slice(1,-1)}`);
+                    outputDiv.textContent = decoded;
+                    outputDiv.scrollTop = outputDiv.scrollHeight; // Autoscroll
+                    await sleep(200); 
+                    continue;
+                }
+                
+                if (code.length !== rings.length) {
+                    decoded += '?';
+                    setStatus(`Malformed code detected: ${code}`);
+                    outputDiv.textContent = decoded;
+                    outputDiv.scrollTop = outputDiv.scrollHeight; // Autoscroll
+                    await sleep(200);
+                    continue;
+                }
+                
+                let foundChar = null;
+                
+                for (const testChar of uniqueEncodableChars) {
+                    let foundOnRing = null;
+
+                    for (let rIdx = 0; rIdx < rings.length; rIdx++) {
+                        if (getCharIndexOnRing(rings[rIdx], testChar) !== -1) {
+                            foundOnRing = rings[rIdx];
+                            break;
+                        }
+                    }
+
+                    if (!foundOnRing) { continue; }
+
+                    // Simulate encoding process to get the expected rotation for this testChar
+                    const sourceRingRot = calculateRingRotationForChar(foundOnRing, testChar);
+                    let baseRotation = (sourceRingRot - (foundOnRing.index * 60));
+                    baseRotation = ((baseRotation % 360) + 360) % 360;
+                    
+                    // Temporarily update `ring.rot` values internally for `getCodeInternal`
+                    rings.forEach((ring, k) => {
+                        const offset = k * 60;
+                        ring.rot = ((baseRotation + offset) % 360 + 360) % 360;
+                    });
+                    
+                    if (getCodeInternal() === code) { // Compare internal code
+                        foundChar = testChar;
+                        beep(600, 0.1);
+                        break;
+                    }
+                }
+
+                // After searching for the character:
+                if (foundChar) {
+                    // Stop search animation temporarily, then transition to found state
+                    clearInterval(searchAnimationInterval); 
+                    searchAnimationInterval = null;
+                    dialContainer.classList.remove('spinning'); // Stop CSS animation
+
+                    // Clear any previous character highlights before setting new ones
+                    clearAllCharHighlights(); 
+
+                    let foundOnRing = null;
+                    for (let rIdx = 0; rIdx < rings.length; rIdx++) {
+                        if (getCharIndexOnRing(rings[rIdx], foundChar) !== -1) {
+                            foundOnRing = rings[rIdx];
+                            break;
+                        }
+                    }
+                    const sourceRingRot = calculateRingRotationForChar(foundOnRing, foundChar);
+                    let baseRotation = (sourceRingRot - (foundOnRing.index * 60));
+                    baseRotation = ((baseRotation % 360) + 360) % 360;
+                    
+                    rings.forEach((ring, k) => {
+                        highlightRing(ring.id, true); // Keep overall ring glow
+                        const offset = k * 60;
+                        updateRing(ring.id, baseRotation + offset, true, (k === foundOnRing.index)); // Show degree for source ring
+                    });
+                    highlightCharacterOnDial(foundOnRing.id, foundChar, true); // Highlight specific char
+                    vib();
+                    await sleep(800); // Pause to observe found char
+                    
+                    if (foundChar === '~') {
+                        decoded += ' '; // Convert ~ back to space
+                        setStatus(`Decoded: Space`);
+                    } else {
+                        decoded += foundChar;
+                        setStatus(`Decoded: ${foundChar}`);
+                    }
+                    outputDiv.textContent = decoded;
+                    outputDiv.scrollTop = outputDiv.scrollHeight; // Autoscroll
+
+                    // Clear highlights after character is processed visually
+                    rings.forEach(ring => highlightRing(ring.id, false));
+                    clearAllCharHighlights();
+                    degreeReadout.textContent = '----';
+
+                    // Restart animation for next search (if more codes)
+                    if (i < codes.length -1) { 
+                        currentVisualRotationOffset = 0;
+                        searchAnimationInterval = setInterval(() => {
+                            rings.forEach((ring, k) => {
+                                highlightRing(ring.id, true);
+                                const gLabels = document.querySelector(`#${ring.id} .labels`);
+                                if (gLabels) {
+                                    gLabels.style.transition = 'none';
+                                    gLabels.setAttribute('transform', `rotate(${currentVisualRotationOffset + (k * 60)}deg)`);
+                                }
+                            });
+                            currentVisualRotationOffset = (currentVisualRotationOffset + 45) % 360;
+                            dialContainer.classList.add('spinning');
+                            degreeReadout.textContent = '----'; // Clear degree readout during search
+                        }, 60);
+                    }
+
+                } else {
+                    decoded += '?'; // Character not found
+                    setStatus(`Code '${code}' not found!`);
+                    beep(200, 0.15); // Failure beep
+                    vib();
+                    await sleep(800);
+                    outputDiv.textContent = decoded;
+                    outputDiv.scrollTop = outputDiv.scrollHeight; // Autoscroll
+
+                    // Revert to a neutral or last known good state for visual consistency
+                    rings.forEach(ring => updateRing(ring.id, 0, true, false)); 
+                    
+                    // Restart animation for next search if applicable
+                    if (i < codes.length -1) {
+                        currentVisualRotationOffset = 0;
+                        searchAnimationInterval = setInterval(() => {
+                            rings.forEach((ring, k) => {
+                                highlightRing(ring.id, true);
+                                const gLabels = document.querySelector(`#${ring.id} .labels`);
+                                if (gLabels) {
+                                    gLabels.style.transition = 'none';
+                                    gLabels.setAttribute('transform', `rotate(${currentVisualRotationOffset + (k * 60)}deg)`);
+                                }
+                            });
+                            currentVisualRotationOffset = (currentVisualRotationOffset + 45) % 360;
+                            dialContainer.classList.add('spinning');
+                            degreeReadout.textContent = '----'; // Clear degree readout during search
+                        }, 60);
+                    }
+                }
+            }
+            
+            // Final cleanup after all codes are processed
+            clearInterval(searchAnimationInterval); // Stop search animation
+            searchAnimationInterval = null; // Clear the interval reference
+            dialContainer.classList.remove('spinning'); // Remove CSS animation class
+            
+            svg.classList.remove('highlight-decode');
+            document.getElementById('decBtn').classList.remove('active');
+            setStatus('✓ DECODED! Recovered original message');
+            beep(700, 0.3);
+            
+            // Ensure rings are reset at the end of decoding and highlights cleared
+            rings.forEach(ring => {
+                updateRing(ring.id, 0, true, false);
+                highlightRing(ring.id, false);
+            });
+            clearAllCharHighlights(); // Final cleanup for all character highlights
+            degreeReadout.textContent = '----'; // Clear degree readout
+            busy = false;
+        }
+
+        // --- Demo Function ---
+        async function demo() {
+            if (busy) return;
+            busy = true;
+            
+            setStatus('DEMO: Setting initial key...');
+            rings.forEach((ring, i) => {
+                updateRing(ring.id, i * 90, true, false); // Don't show degree readout immediately
+                highlightRing(ring.id, true);
+            });
+            await sleep(1000);
+            rings.forEach(ring => highlightRing(ring.id, false));
+            
+            const test = 'Hello World! 123'; // Now includes spaces, mixed case, numbers, symbol
+            document.getElementById('msg').value = test;
+            setStatus('DEMO: Encoding "Hello World! 123"...');
+            await sleep(500);
+            
+            await encode();
+            await sleep(1500);
+            
+            const encoded = outputDiv.textContent;
+            document.getElementById('msg').value = encoded;
+            setStatus('DEMO: Decoding...');
+            await sleep(800);
+            
+            await decode();
+            
+            setStatus('DEMO DONE! Try typing your own message (including mixed case, numbers, symbols)');
+            busy = false;
+            // Ensure rings are reset at the end of demo
+            rings.forEach(ring => updateRing(ring.id, 0, true, false));
+            degreeReadout.textContent = '----'; // Clear degree readout
+        }
+
+        // --- Utility & Event Handlers ---
+        function sleep(ms) {
+            return new Promise(r => setTimeout(r, ms));
+        }
+
+        function getAng(e, ctr) {
+            const rect = dialContainer.getBoundingClientRect(); // Use dialContainer reference
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - ctr.x;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - ctr.y;
+            return Math.atan2(y, x) * 180 / Math.PI;
+        }
+
+        function handleStart(e) {
+            if (busy) return;
+            initAudio();
+            e.preventDefault();
+            
+            const rect = dialContainer.getBoundingClientRect(); // Use dialContainer reference
+            const ctr = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+            const x = (e.touches ? e.touches[0].clientX : e.clientX) - ctr.x;
+            const y = (e.touches ? e.touches[0].clientY : e.clientY) - ctr.y;
+            const d = Math.sqrt(x*x + y*y) / (rect.width / 2) * 260; // Scale distance to SVG coordinates
+            
+            for (let ring of rings) {
+                if (d >= ring.r - ring.w/2 && d <= ring.r + ring.w/2) {
+                    active = ring;
+                    startAng = getAng(e, ctr);
+                    startRot = ring.rot;
+                    highlightRing(ring.id, true);
+                    clearAllCharHighlights(); // Clear all highlights first
+                    const currentCharIndex = Math.floor(((-ring.rot + 90 + 360) % 360) / (360 / ring.chars.length) + 0.0000001) % ring.chars.length;
+                    highlightCharacterOnDial(ring.id, ring.chars[currentCharIndex], true);
+                    degreeReadout.textContent = formatDegree(active.rot); // Initial readout
+                    beep(500);
+                    vib();
+                    break;
+                }
+            }
+        }
+
+        function handleMove(e) {
+            if (!active || busy) return;
+            e.preventDefault();
+            
+            const rect = dialContainer.getBoundingClientRect(); // Use dialContainer reference
+            const ctr = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+            const ang = getAng(e, ctr);
+            const delta = ang - startAng;
+            updateRing(active.id, startRot + delta, false, true); // Update with degree readout
+            clearAllCharHighlights(); // Clear previous char highlight before updating
+            const currentCharIndex = Math.floor(((-active.rot + 90 + 360) % 360) / (360 / active.chars.length) + 0.0000001) % active.chars.length;
+            highlightCharacterOnDial(active.id, active.chars[currentCharIndex], true);
+        }
+
+        function handleEnd() {
+            if (active) {
+                highlightRing(active.id, false);
+                clearAllCharHighlights(); // Clear character highlight
+                vib();
+            }
+            active = null;
+            degreeReadout.textContent = '----'; // Clear degree readout when no ring is active
+        }
+
+        createDial();
+
+        dialContainer.addEventListener('mousedown', handleStart);
+        dialContainer.addEventListener('touchstart', handleStart, { passive: false });
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('touchmove', handleMove, { passive: false });
+        document.addEventListener('mouseup', handleEnd);
+        document.addEventListener('touchend', handleEnd);
+
+        document.getElementById('encBtn').addEventListener('click', () => {
+            initAudio();
+            encode();
+        });
+
+        document.getElementById('decBtn').addEventListener('click', () => {
+            initAudio();
+            decode();
+        });
+
+        document.getElementById('demoBtn').addEventListener('click', () => {
+            initAudio();
+            demo();
+        });
+
+        document.getElementById('rstBtn').addEventListener('click', () => {
+            if (busy) {
+                setStatus('Busy! Cannot reset while encoding/decoding.');
+                beep(200);
+                return;
+            }
+            if (searchAnimationInterval) {
+                clearInterval(searchAnimationInterval);
+                searchAnimationInterval = null;
+                dialContainer.classList.remove('spinning');
+            }
+            rings.forEach(ring => {
+                updateRing(ring.id, 0, true, false); // Don't show degree readout
+                highlightRing(ring.id, true);
+            });
+            clearAllCharHighlights(); // Clear all char highlights
+            setTimeout(() => rings.forEach(ring => highlightRing(ring.id, false)), 500);
+            beep(400, 0.1);
+            setStatus('Reset complete');
+            document.getElementById('msg').value = '';
+            outputDiv.textContent = 'OUTPUT...';
+            degreeReadout.textContent = '----'; // Clear degree readout
+            outputDiv.scrollTop = outputDiv.scrollHeight; // Autoscroll
+        });
+
+        document.getElementById('cpyBtn').addEventListener('click', async () => {
+            const txt = outputDiv.textContent;
+            if (!txt || txt === 'OUTPUT...') {
+                setStatus('Nothing to copy!');
+                beep(200);
+                return;
+            }
+
+            if (!navigator.clipboard || !navigator.clipboard.writeText) {
+                const textArea = document.createElement("textarea");
+                textArea.value = txt;
+                textArea.style.position = "fixed";  // Avoid scrolling to bottom
+                textArea.style.left = "-9999px"; // Off-screen
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    setStatus('Copied (fallback)!');
+                    beep(550);
+                } catch (err) {
+                    setStatus('Failed to copy. Please select and copy manually from output.');
+                    beep(200);
+                    console.error('Fallback copy failed:', err);
+                } finally {
+                    document.body.removeChild(textArea);
+                }
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(txt);
+                setStatus('Copied!');
+                beep(550);
+            } catch (err) {
+                setStatus('Failed to copy: ' + (err.message || 'Unknown error') + '. Ensure site has clipboard permissions.');
+                beep(200);
+                console.error('Clipboard write failed:', err);
+                alert('Failed to copy text automatically. Please select the output text and copy it manually.');
+            }
+        });
+
+        document.getElementById('sndBtn').addEventListener('click', () => {
+            sound = !sound;
+            document.getElementById('sndBtn').textContent = sound ? '♪ON' : '♪OFF';
+            if (sound) {
+                initAudio();
+                beep(600);
+            }
+        });
+    </script>
+</body>
+</html>
